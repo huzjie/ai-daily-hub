@@ -15,8 +15,46 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
+| 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-11）
+
+### AegisAgent（AI Agent 运行时安全网关与特权治理平台）
+
+**热点背景**：2026-08 云安全联盟（CSA）披露 **CoreBreak** 漏洞族——AWS Bedrock AgentCore（CVE-2026-18830, CVSS 8.6）、Google ADK（CVE-2026-18236, CVSS 9.3）、Vercel @ai-sdk/harness（CVE-2026-64650/64651）可在**模型根本没运行**的情况下被触发工具调用；Claude Code / Gemini CLI 被一个 GitHub issue 就能在 CI 上执行代码并逐字符泄露 API Key（CVE-2026-12537, CVSS 10.0）。AI Agent 的运行时安全防线集体失守。
+
+**项目定位**：一套可落地、可生产部署的 **AI Agent 运行时安全网关**。核心命题是"每一次工具调用都必须能被密码学地绑定回一次真实发生过的模型补全"，直击 CoreBreak 漏洞根因。
+
+**核心能力**：
+- 🔐 **Provenance 溯源引擎**：HMAC 签名 attestation token 绑定每次 tool call 到真实 completion，判定 UNSIGNED / FORGED / ORPHANED / MISMATCHED / REPLAYED / EXPIRED，逐条对应 CVE
+- 📜 **策略引擎**：YAML 策略 DSL（matchers + conditions + effects）+ 8 个内置策略包 + 规则覆盖分析 + what-if 模拟器 + 热重载
+- 🛡️ **多检测器检测层**：120+ 条签名规则（prompt 注入 / 凭据扫描 / 外泄链 / 工具投毒 / schema 漂移 / 行为异常 / 出网管控）
+- 📦 **沙箱隔离**：Subprocess / Docker / Firejail 驱动 + seccomp + rlimit + 文件系统 jail + 出网白名单 + canary token + 12 项边界自测探针
+- 👥 **人工审批**：多级 N-of-M 会签 + TOTP/硬件密钥 step-up + 逐级升级 + break-glass 紧急通道（防伪造审批）
+- 🔌 **MCP 安全代理**：工具描述净化 + schema 钉扎 + shadow MCP 发现 + AI-BOM + 凭据隔离
+- 🌐 **LLM 网关**：9 家供应商适配器（OpenAI/Anthropic/Gemini/Bedrock/Qwen/DeepSeek/Kimi/Ollama）+ 中间件 + 本地反向代理
+- 🔗 **不可篡改审计**：HMAC 哈希链 + SQLite 持久化 + JSONL/CSV 导出 + Prometheus 指标
+- 🖥️ **可观测**：CLI（9 子命令）+ REST API + 单文件深色 Web 控制台
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/aegisagent.git
+cd aegisagent
+pip install -e .
+aegis init        # 生成配置
+aegis doctor      # 环境诊断
+aegis serve       # 启动 API + Web 控制台 http://127.0.0.1:8080
+aegis check --json '{"tool":"shell.exec","arguments":{"command":"rm -rf /"}}'
+```
+
+**质量**：248 文件 / stdlib-only 内核（零第三方依赖）/ 9 框架集成（LangChain/LlamaIndex/AutoGen/CrewAI 等）/ Docker 多阶段构建 + docker-compose / GitHub Actions CI + CodeQL / 中英双语文档 + 威胁模型文档。
+
+[![GitHub](https://img.shields.io/badge/Repo-aegisagent-blue)](https://github.com/huzjie/aegisagent)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/aegisagent/blob/main/LICENSE)
 
 ---
 
@@ -394,6 +432,7 @@ cd src/agentmesh/web && npm install && npm run dev   # 控制台 http://localhos
 
 | 日期 | 项目 | 说明 |
 |---|---|---|
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
 | 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
 | 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
 | 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
