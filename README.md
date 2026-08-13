@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-13 | 开源旗舰模型权重集中开放（Qwen3.8-2.4T-A95B 首次开源 Max 级 / DeepSeek V4 Pro 0813 / Nemotron 3.5 Lightning）| [**QuantServe（本地化部署与量化推理平台）**](https://github.com/huzjie/quantserve) | Python 3.10+ 标准库内核 + FastAPI + React 18 + K8s/Helm | 213 文件 | ✅ 已发布 |
 | 2026-08-12 | NVIDIA NeMo Switchyard (cost-optimized agent routing, 4x faster, 1/3 cost) | [**SmartRoute（LLM 成本最优路由网关）**](https://github.com/huzjie/smartroute) |
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
@@ -19,6 +20,44 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-13）
+
+### QuantServe（开源大模型本地化部署与量化推理平台）
+
+**热点背景**：2026-08-13 是开源旗舰模型「集中开放」的历史性一天——阿里首次开源 Max 级旗舰权重 **Qwen3.8-2.4T-A95B**（2.4T 参数 / 512 专家 MoE / 每 token 激活 95B / 原生 262K 上下文）；**DeepSeek V4 Pro（0813 版）** DeepSWE 编程基准从 12.8 跃升至 62.7；**NVIDIA Nemotron 3.5 Lightning** 单卡可跑；**Unsloth 动态 1-bit 量化**把 4.9TB 权重压缩至 397GB（91%）。
+
+**项目定位**：一套把「开源旗舰大模型带回家」的**本地化部署与量化推理平台**，覆盖从下载权重到对外服务再到成本核算的全流程，核心内核**零第三方依赖**（纯 Python 标准库）。
+
+**核心能力**：
+- 🗂️ **模型库**：25 个内置模型 profile（Qwen3.8 / DeepSeek V4 / Nemotron / Kimi K3 / GLM-5.2 / Llama / Gemma / Mistral / Phi 等），自动发现
+- ⬇️ **多源下载**：HuggingFace / hf-mirror.com / ModelScope 魔搭 / Ollama 四源 + 多线程 + 断点续传 + sha256 校验
+- ⚖️ **量化规划**：8 种方案（fp16/fp8/int8/GPTQ/AWQ/GGUF/1-bit 动态/混合）的体积·显存·压缩比·吞吐估算 + 预算推荐
+- 🧩 **多引擎推理**：vLLM / SGLang / TokenSpeed / LMDeploy / Ollama / llama.cpp / TRT-LLM / Transformers 8 引擎适配
+- 🖥️ **MoE 并行规划**：按 GPU 数量/显存自动规划 TP/EP/DP（正确按总参数算显存，2.4T 模型会提示需约 34 块 80GB 卡）
+- 💰 **成本对比**：本地 vs 云端 TCO（硬件摊销+电费 vs 按 token 计费），给出回本用量
+- 🌐 **OpenAI 兼容网关**：零依赖 HTTP 网关 + 鉴权 + SSE 流式
+- 🖥️ **Web 控制台**：React 控制台（模型库/量化估算/集群规划/成本对比）
+- 📦 **部署资产**：Docker / docker-compose / K8s / Helm / CI
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/quantserve.git
+cd quantserve
+pip install -e .
+quantserve doctor
+quantserve list
+quantserve quantize qwen/qwen3.8-2.4t-a95b --budget 640
+quantserve plan deepseek/deepseek-v4-pro
+quantserve cost deepseek/deepseek-v4-pro --tokens 500
+```
+
+**质量**：213 文件 / 126 Python + 11 TSX + 26 文档 / 零强制依赖核心 / 8 引擎 + 25 模型 / Docker 多阶段构建 / K8s + Helm / GitHub Actions CI（多 Python 版本 + CodeQL）。
+
+[![GitHub](https://img.shields.io/badge/Repo-quantserve-blue)](https://github.com/huzjie/quantserve)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/quantserve/blob/main/LICENSE)
 
 ---
 
