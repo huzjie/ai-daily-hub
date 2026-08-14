@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-14 | DeepSeek Harness 开源「一切皆插件」Agent 运行框架（MIT）+ DeepSeek-V4-Pro 正式版 + Gemini 3.7 Flash + GPT-5.6 Sol Ultrafast | [**harnesskit（插件化 Agent 运行时）**](https://github.com/huzjie/harnesskit) | Python 3.10+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 243 文件 | ✅ 已发布 |
 | 2026-08-13 | 开源旗舰模型权重集中开放（Qwen3.8-2.4T-A95B 首次开源 Max 级 / DeepSeek V4 Pro 0813 / Nemotron 3.5 Lightning）| [**QuantServe（本地化部署与量化推理平台）**](https://github.com/huzjie/quantserve) | Python 3.10+ 标准库内核 + FastAPI + React 18 + K8s/Helm | 213 文件 | ✅ 已发布 |
 | 2026-08-12 | NVIDIA NeMo Switchyard (cost-optimized agent routing, 4x faster, 1/3 cost) | [**SmartRoute（LLM 成本最优路由网关）**](https://github.com/huzjie/smartroute) |
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
@@ -20,6 +21,42 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-14）
+
+### harnesskit（插件化 AI Agent 运行时）
+
+**热点背景**：2026-08-14 凌晨，DeepSeek 正式开源其 Agent 运行框架 **DeepSeek Harness（DSH）** 开发者预览版（MIT 协议），核心是「**一切皆插件**」——模型、工具、技能、会话记忆、沙箱、文件系统、Agent 循环乃至 UI 全部模块化、可热插拔。这标志着大模型竞争从「基础模型层」正式进入「**执行层 / Agent 运行时层**」。同期还有 DeepSeek-V4-Pro 正式版（DeepSWE 12.8→62.7）、Gemini 3.7 Flash（API 降价 50%）、GPT-5.6 Sol Ultrafast（Cerebras 加速 750 tok/s）。
+
+**项目定位**：**harnesskit** 是「一切皆插件」思想的独立实现——一个**跨 Provider、跨框架、可插拔、企业级**的通用 Agent 运行时。不绑定任何模型厂商，内核**零第三方依赖**（纯标准库），mock 模式完全离线可跑，填上 API Key 即连真实模型。一句话：**模型(大脑) + harnesskit(身体) = 智能体**。
+
+**核心能力**：
+- 🧩 **一切皆插件**：模型/工具/技能/记忆/沙箱/循环全可插拔，运行时热加载/卸载/热重载，依赖自动拓扑排序（Kahn）
+- 🧠 **三种 Agent 循环**：react（思考-行动-观察）、plan-execute（先规划后执行）、autonomous（自主循环）
+- 🌐 **13 家 Provider**：OpenAI 兼容协议一键接入 DeepSeek/Qwen/Kimi/GLM/vLLM/GPT，另有 Anthropic、Gemini、Ollama、Together、Groq、OpenRouter 专用适配器 + 离线 Mock
+- 🔧 **15 个内置工具**：网页抓取/HTTP/文件/Shell/搜索/Python/计算器/日期/文本/JSON/CSV/Git/摘要/随机/环境变量
+- 🧠 **分层记忆**：会话/SQLite/文件 + 摘要压缩；🛡️ **沙箱**：子进程/Docker + 命令黑名单 + 路径逃逸防护
+- 📦 **多 Agent 编排**：顺序/并行/层级三种拓扑；🔌 **控制面**：FastAPI + OpenAI 兼容 `/v1/chat/completions` + API Key 鉴权
+- 🖥️ **Web 控制台**（React 深色主题）+ **CLI**（run/serve/chat/doctor）+ **双语言 SDK**（Python + TypeScript）
+- ☸️ **部署**：Docker 多阶段 / docker-compose / K8s / Helm / GitHub Actions CI + CodeQL
+- 📚 **17 篇文档**：架构/插件/模型/工具/技能/记忆/沙箱/编排/安全/部署全覆盖
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/harnesskit.git
+cd harnesskit
+pip install -e .            # 核心零依赖，mock 模式直接跑
+harnesskit doctor
+harnesskit run "什么是插件化 Agent 运行时？"
+harnesskit serve --port 8000   # 启动控制面（需 pip install -e ".[full]"）
+```
+
+**质量**：243 文件 / 内核纯标准库零依赖 / 13 Provider + 15 工具 + 3 循环 / 18 条 API 路由 / 全部子包导入验证通过 / Docker 多阶段 + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-harnesskit-blue)](https://github.com/huzjie/harnesskit)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/harnesskit/blob/main/LICENSE)
 
 ---
 
