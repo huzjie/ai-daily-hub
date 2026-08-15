@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-15 | 智谱 GLM-5.3 网络安全突破（CyberGym 漏洞推理 84.5%、发现 40 年老漏洞、2404 个潜在漏洞） | [**vulnforge（AI 自主漏洞挖掘与安全审计平台）**](https://github.com/huzjie/vulnforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 218 文件 | ✅ 已发布 |
 | 2026-08-15 | AI 编码智能体把瓶颈从「写代码」移到「审代码」（Faros AI：审查耗时 +441.5%、churn +861%；LinearB：AI PR 大 2.5 倍；GitHub：「幻觉式正确」） | [**reviewgate（AI 代码审查与 PR 治理平台）**](https://github.com/huzjie/reviewgate) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 197 文件 | ✅ 已发布 |
 | 2026-08-14 | DeepSeek Harness 开源「一切皆插件」Agent 运行框架（MIT）+ DeepSeek-V4-Pro 正式版 + Gemini 3.7 Flash + GPT-5.6 Sol Ultrafast | [**harnesskit（插件化 Agent 运行时）**](https://github.com/huzjie/harnesskit) | Python 3.10+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 243 文件 | ✅ 已发布 |
 | 2026-08-13 | 开源旗舰模型权重集中开放（Qwen3.8-2.4T-A95B 首次开源 Max 级 / DeepSeek V4 Pro 0813 / Nemotron 3.5 Lightning）| [**QuantServe（本地化部署与量化推理平台）**](https://github.com/huzjie/quantserve) | Python 3.10+ 标准库内核 + FastAPI + React 18 + K8s/Helm | 213 文件 | ✅ 已发布 |
@@ -25,7 +26,43 @@
 
 ---
 
-## 🏆 今日精选（2026-08-15）
+## 🏆 今日精选
+
+### vulnforge（AI 自主漏洞挖掘与安全审计平台）
+
+**热点背景**：智谱 8 月 14 日发布 GLM-5.3——7430 亿参数新一代基座模型，后训练 Scaling 在编程与网络安全双突破：CyberGym 漏洞推理评测 **84.5%**（超过 Mythos 5 的 83.8% 与 GPT-5.6 Sol 的 83.6%），两周内发现 **2404 个潜在漏洞**（1088 个中高危），最早的潜伏约 40 年；完整权重两周内开源。这标志着「AI 自主漏洞挖掘」从实验室进入实用。
+
+**项目定位**：**vulnforge** 是「AI 驱动的自主漏洞挖掘与安全审计平台」——把 GLM-5.3 证明可行的「白盒源码 → 触发故障 → 识别验证漏洞」能力产品化。内核**零第三方依赖**，`mock` 模式完全离线可跑，填上 API Key 即连真实模型。
+
+**核心能力**：
+- 🛡️ **87 条静态规则**：密钥泄漏、SQL 注入、XSS、路径穿越、命令注入、弱加密、不安全反序列化、SSRF、硬编码凭据、代码质量、C/C++ 内存安全、Go/Java/Python 专属规则
+- 🧠 **LLM 漏洞推理**：分块推理大代码，容错解析模型输出；8 Provider（GLM-5.3/DeepSeek/Qwen/OpenAI/Anthropic/Gemini/Ollama/mock）
+- 🎲 **轻量模糊测试**：覆盖引导 fuzz 引擎 + 变异器 + crash 收集
+- 📦 **依赖扫描**：SBOM 生成 + OSV/CVE 查询
+- 🔍 **密钥扫描**：前缀 + 香农熵检测
+- 📐 **CVSS 3.1 评分** + CWE 分类
+- 📄 **五种报告**：JSON / Markdown / HTML / SARIF（可上传 GitHub Code Scanning）/ CycloneDX SBOM
+- 🖥️ **Web 控制台**（React 深色）+ **CLI**（scan/serve/fuzz/sbom/rules/doctor）+ **双语言 SDK**（Python + TypeScript）
+- ☸️ **部署**：Docker / K8s / Helm / CI + CodeQL；📚 **22 篇文档**
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/vulnforge.git
+cd vulnforge
+pip install -e .            # 核心零依赖，mock 模式直接跑
+vulnforge doctor
+vulnforge scan examples/vulnerable
+vulnforge serve --port 8000   # 控制面（需 pip install -e ".[full]"）
+```
+
+**质量**：218 文件 / 内核纯标准库零依赖 / 87 规则 + 5 扫描器 + 8 Provider / 5 报告格式 / 194 单元测试全绿 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-vulnforge-blue)](https://github.com/huzjie/vulnforge)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/vulnforge/blob/main/LICENSE)
+
+---
+
+（2026-08-15）
 
 ### reviewgate（AI 代码审查与 PR 治理平台）
 
