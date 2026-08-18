@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-18 | DeepSeek Harness 插件生态爆发（42 小时破 10 万星、社区 3000+ 插件仓库）+ GPT-5.6 多智能体委派（小模型 1/18 成本保 98% 准确率） | [**plugforge（AI Agent 插件生态治理与供应链安全平台）**](https://github.com/huzjie/plugforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 181 文件 | ✅ 已发布 |
 | 2026-08-15 | 智谱 GLM-5.3 网络安全突破（CyberGym 漏洞推理 84.5%、发现 40 年老漏洞、2404 个潜在漏洞） | [**vulnforge（AI 自主漏洞挖掘与安全审计平台）**](https://github.com/huzjie/vulnforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 218 文件 | ✅ 已发布 |
 | 2026-08-15 | AI 编码智能体把瓶颈从「写代码」移到「审代码」（Faros AI：审查耗时 +441.5%、churn +861%；LinearB：AI PR 大 2.5 倍；GitHub：「幻觉式正确」） | [**reviewgate（AI 代码审查与 PR 治理平台）**](https://github.com/huzjie/reviewgate) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 197 文件 | ✅ 已发布 |
 | 2026-08-14 | DeepSeek Harness 开源「一切皆插件」Agent 运行框架（MIT）+ DeepSeek-V4-Pro 正式版 + Gemini 3.7 Flash + GPT-5.6 Sol Ultrafast | [**harnesskit（插件化 Agent 运行时）**](https://github.com/huzjie/harnesskit) | Python 3.10+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 243 文件 | ✅ 已发布 |
@@ -27,6 +28,41 @@
 ---
 
 ## 🏆 今日精选
+
+### plugforge（AI Agent 插件生态治理与供应链安全平台）
+
+**热点背景**：8 月 13 日 DeepSeek 开源 **DeepSeek Harness**——「一切皆插件」的 Agent 运行框架，GitHub 上线 42 小时破 10 万星，社区两天涌现近 3000 个插件仓库，被评价为「自进化软件」雏形。当 Agent 能力以插件形式爆炸式增长，一个尖锐问题浮出水面：**你怎么知道装进 Agent 的插件不会偷密钥、外传数据、或者就是个供应链投毒包？**
+
+**项目定位**：**plugforge** 把 npm/PyPI 生态成熟的「注册 + 审查 + 溯源 + 治理」能力原样搬到 AI Agent 插件生态。内核**零第三方依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 📦 **registry**：插件注册中心（发布 / SemVer / 命名空间 / 倒排索引搜索）
+- 🛡️ **security**：15 条静态规则 + 5 类能力画像 + 依赖/SBOM 审计（恶意包黑名单）+ CVSS 3.1 + 恶意行为启发式检测
+- ✍️ **signature**：Ed25519 签名 + 哈希链 provenance（防篡改溯源）
+- 🔗 **depsolver**：拓扑排序 + 版本区间冲突 + 循环依赖检测
+- ⚙️ **installer**：下载 / 校验 / 安装 / 锁定 / 回滚 + 安装前安全门禁
+- 📋 **policy**：许可合规 + 严重度阈值 + 网络访问控制
+- 🖥️ **FastAPI 控制面（17 路由）+ CLI（9 命令）+ Python/TS SDK + React 深色控制台**
+- ☸️ **部署**：Docker / docker-compose / K8s / Helm / CI + CodeQL；📚 **22 篇文档**
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/plugforge.git
+cd plugforge
+pip install -e .        # 核心零依赖，mock 模式直接跑
+plugforge doctor
+plugforge search
+plugforge scan examples/plugins/web-scraper
+```
+
+**质量**：181 文件 / 内核纯标准库零依赖 / 15 规则 + 5 能力检测 + 依赖黑名单 / 26 单元测试全绿 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-plugforge-blue)](https://github.com/huzjie/plugforge)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/plugforge/blob/main/LICENSE)
+
+---
+
+
 
 ### vulnforge（AI 自主漏洞挖掘与安全审计平台）
 
