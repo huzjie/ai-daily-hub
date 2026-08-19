@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-19 | 上下文工程/图原生记忆集体霸榜（semantica 图原生上下文 + 腾讯 TencentDB-Agent-Memory 团队记忆中枢 + code-graph-rag 知识图谱 RAG） | [**memoria（图原生上下文与可问责 AI 记忆基础设施）**](https://github.com/huzjie/memoria) | Python 3.9+ 零依赖内核 + FastAPI + React + K8s/Helm | 161 文件 | ✅ 已发布 |
 | 2026-08-18 | DeepSeek Harness 插件生态爆发（42 小时破 10 万星、社区 3000+ 插件仓库）+ GPT-5.6 多智能体委派（小模型 1/18 成本保 98% 准确率） | [**plugforge（AI Agent 插件生态治理与供应链安全平台）**](https://github.com/huzjie/plugforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 181 文件 | ✅ 已发布 |
 | 2026-08-15 | 智谱 GLM-5.3 网络安全突破（CyberGym 漏洞推理 84.5%、发现 40 年老漏洞、2404 个潜在漏洞） | [**vulnforge（AI 自主漏洞挖掘与安全审计平台）**](https://github.com/huzjie/vulnforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 218 文件 | ✅ 已发布 |
 | 2026-08-15 | AI 编码智能体把瓶颈从「写代码」移到「审代码」（Faros AI：审查耗时 +441.5%、churn +861%；LinearB：AI PR 大 2.5 倍；GitHub：「幻觉式正确」） | [**reviewgate（AI 代码审查与 PR 治理平台）**](https://github.com/huzjie/reviewgate) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 197 文件 | ✅ 已发布 |
@@ -28,6 +29,42 @@
 ---
 
 ## 🏆 今日精选
+
+### memoria（图原生上下文与可问责 AI 记忆基础设施）
+
+**热点背景**：本周 GitHub 热榜被「上下文工程」与「图原生记忆」刷屏——semantica 用知识图谱重组 Agent 记忆与决策依据、腾讯 TencentDB-Agent-Memory 把对话/文档/代码沉淀为四种可复用记忆资产（Chat Memory / Skill / LLM-Wiki / Code-Graph）、code-graph-rag 用知识图谱检索多语言代码库。当模型权重趋同、竞争壁垒从「模型」迁移到「执行与记忆」，一个尖锐问题浮出水面：**Agent 的「失忆」怎么治？AI 的结论能不能被追溯问责？**
+
+**项目定位**：**memoria** 把 AI 记忆从「一串 token」升级为「一张关系图」。内核**零第三方依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🕸️ **图数据模型**：Node/Edge/Provenance，有向带属性多重图，BFS/邻居/子图抽取
+- 💾 **多后端存储**：内存 / SQLite / 可选 Neo4j
+- 🧠 **四种记忆资产**：Chat Memory（对话）/ Skill（技能）/ LLM-Wiki（语义）/ Code-Graph（代码图谱）
+- 🔎 **混合检索**：图遍历 + 向量相似度 + 倒排索引，RRF 融合排序
+- ⚖️ **可问责**：provenance 追踪 + 结论溯源 + 追加式审计日志
+- 📥 **多源摄取**：对话 / 文档 / Python 代码（AST）/ 网页
+- 🖥️ **FastAPI 控制面（26 路由）+ CLI + Python/TS SDK + React 深色控制台**
+- ☸️ **部署**：Docker / docker-compose / K8s / Helm / CI + CodeQL；📚 **21 篇文档**
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/memoria.git
+cd memoria
+pip install -e .        # 核心零依赖，mock 模式直接跑
+memoria doctor
+memoria ingest examples/sample_conversation.md
+memoria recall "knowledge graph"
+memoria serve
+```
+
+**质量**：161 文件 / 89 Python 文件 / 内核纯标准库零依赖 / 4 记忆资产 + 混合检索 + 问责溯源 / 26 单元测试 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-memoria-blue)](https://github.com/huzjie/memoria)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/memoria/blob/main/LICENSE)
+
+---
+
+
 
 ### plugforge（AI Agent 插件生态治理与供应链安全平台）
 
