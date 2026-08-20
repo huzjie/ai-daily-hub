@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-20 | MCP 协议 2026-07-28 无状态化史诗级更新（移除握手/会话、头路由 + MRTR 多往返请求 + 列表缓存 ttlMs + EMA 企业级统一授权转正 + Scale AI MCP Atlas 评测）| [**mcplane（无状态 MCP 控制平面与网关）**](https://github.com/huzjie/mcplane) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 159 文件 | ✅ 已发布 |
 | 2026-08-19 | 上下文工程/图原生记忆集体霸榜（semantica 图原生上下文 + 腾讯 TencentDB-Agent-Memory 团队记忆中枢 + code-graph-rag 知识图谱 RAG） | [**memoria（图原生上下文与可问责 AI 记忆基础设施）**](https://github.com/huzjie/memoria) | Python 3.9+ 零依赖内核 + FastAPI + React + K8s/Helm | 161 文件 | ✅ 已发布 |
 | 2026-08-18 | DeepSeek Harness 插件生态爆发（42 小时破 10 万星、社区 3000+ 插件仓库）+ GPT-5.6 多智能体委派（小模型 1/18 成本保 98% 准确率） | [**plugforge（AI Agent 插件生态治理与供应链安全平台）**](https://github.com/huzjie/plugforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 181 文件 | ✅ 已发布 |
 | 2026-08-15 | 智谱 GLM-5.3 网络安全突破（CyberGym 漏洞推理 84.5%、发现 40 年老漏洞、2404 个潜在漏洞） | [**vulnforge（AI 自主漏洞挖掘与安全审计平台）**](https://github.com/huzjie/vulnforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 218 文件 | ✅ 已发布 |
@@ -25,6 +26,44 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-20）
+
+### mcplane（无状态 MCP 控制平面与网关）
+
+**热点背景**：2026-07-28，MCP 迎来自发布以来最大规模的「史诗级更新」——协议层彻底**无状态化**：`initialize` 握手与 `Mcp-Session-Id` 被移除，路由信息上移到 `Mcp-Method`/`Mcp-Name` HTTP 头；引入 **MRTR 多往返请求**（`input_required`/`inputResponses`）、**列表结果缓存**（`ttlMs` + `cacheScope`）、**OAuth 2.0/OIDC 加固**（RFC 9207 发行者校验）与正式扩展框架（MCP Apps / Tasks 长任务）；企业呼声最高的 **EMA（Enterprise-Managed Authorization）** 同期转正，Anthropic/Microsoft/Okta 已采纳。同周 Scale AI 发布 **MCP Atlas** 评测（1000 任务 / 36 服务器 / 220 工具），把「真实工具调用能力」提上桌。
+
+**项目定位**：**mcplane** 是为这个无状态时代打造的**控制平面与网关**——把任意数量的 MCP 服务器统一接入，按头路由、集中鉴权授权、限流、缓存与观测。内核**零第三方运行时依赖**（纯 Python 标准库），`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🚪 **无状态网关**：基于 `Mcp-Method`/`Mcp-Name` 头的路由 + 无状态代理 + 负载均衡（round-robin/weighted/random）
+- 🔁 **MRTR**：多往返请求 `input_required`/`inputResponses` 交互闭环，含最大往返次数护栏
+- 🔐 **EMA 统一授权**：principal × server × method × scopes 规则，零信任默认拒绝；OIDC/RFC 9207 + HS256 JWT + API Key
+- ⏱️ **限流**：线程安全令牌桶，支持突发（burst）
+- 💾 **列表缓存**：`ttlMs` + `cacheScope` 语义，确定性排序
+- 📋 **长任务**：MCP Tasks 扩展，任务生命周期管理
+- 📊 **可观测**：Prometheus 指标 + W3C traceparent 追踪
+- 🔌 **多语言 SDK**：Python（同步/异步）+ TypeScript
+- 🖥️ **React 深色控制台** + CLI（version/doctor/serve/register/list/call/token）
+- ☸️ **部署**：Docker / docker-compose / K8s / Helm / CI + CodeQL；📚 **20+ 篇文档**
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/mcplane.git
+cd mcplane
+pip install -e .          # 核心零依赖，开箱即用
+mcplane doctor
+python -m mcplane.mock --port 8100   # 另开终端启动 mock 服务器
+mcplane serve
+mcplane call --server echo --tool echo --arguments '{"text":"hello stateless MCP"}'
+```
+
+**质量**：159 文件 / 37 Python 核心模块 / 内核纯标准库零依赖 / 无状态网关 + MRTR + EMA + 限流 + 缓存 + 长任务 / 28 单元测试 / Python+TS 双 SDK + React 控制台 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-mcplane-blue)](https://github.com/huzjie/mcplane)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/mcplane/blob/main/LICENSE)
 
 ---
 
