@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-21 | AI 从「对话助手」进化为「数字员工」（Anthropic Computer Use / Skills API / Files API + Claude Academy 4D AI Fluency + 阿里 Qwen-UI-Agent + Mistral Agentic Search）| [**agentdesk（企业级 AI 数字员工运营平台）**](https://github.com/huzjie/agentdesk) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 180 文件 | ✅ 已发布 |
 | 2026-08-20 | MCP 协议 2026-07-28 无状态化史诗级更新（移除握手/会话、头路由 + MRTR 多往返请求 + 列表缓存 ttlMs + EMA 企业级统一授权转正 + Scale AI MCP Atlas 评测）| [**mcplane（无状态 MCP 控制平面与网关）**](https://github.com/huzjie/mcplane) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 159 文件 | ✅ 已发布 |
 | 2026-08-19 | 上下文工程/图原生记忆集体霸榜（semantica 图原生上下文 + 腾讯 TencentDB-Agent-Memory 团队记忆中枢 + code-graph-rag 知识图谱 RAG） | [**memoria（图原生上下文与可问责 AI 记忆基础设施）**](https://github.com/huzjie/memoria) | Python 3.9+ 零依赖内核 + FastAPI + React + K8s/Helm | 161 文件 | ✅ 已发布 |
 | 2026-08-18 | DeepSeek Harness 插件生态爆发（42 小时破 10 万星、社区 3000+ 插件仓库）+ GPT-5.6 多智能体委派（小模型 1/18 成本保 98% 准确率） | [**plugforge（AI Agent 插件生态治理与供应链安全平台）**](https://github.com/huzjie/plugforge) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + K8s/Helm | 181 文件 | ✅ 已发布 |
@@ -26,6 +27,45 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-21）
+
+### agentdesk（企业级 AI 数字员工运营平台）
+
+**热点背景**：2026-08-21，AI 的叙事发生根本转向——**Anthropic 正式上线 Computer Use / Skills API / Files API**（Claude 智能体可直接操作软件、调用团队预设技能、生成并返回成品文件）并推出 **Claude Academy + 4D AI Fluency Framework**（给 AI 员工做「入职培训」）；阿里发布 **Qwen-UI-Agent**（让模型真正「看懂并操作」屏幕）；**Mistral Agentic Search** 五步循环自主查资料；Google 开源**零信任 AI 智能体架构**。AI 从「会聊天」走向「会干活、可管理、可教学」。
+
+**项目定位**：**agentdesk** 是这一趋势的自托管落地实现——把大模型变成可管理、可教学、可操作电脑、可交付文件的**数字员工**，覆盖「入职→赋技能→操作电脑→产出文件→培训认证→零信任审计」全流程闭环。核心内核**零第三方运行时依赖**（纯 Python 标准库），`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🧑💼 **数字员工目录**：员工注册、生命周期状态机（provisioned→onboarding→active→paused→offboarded）、入职编排
+- 🧩 **技能体系（Skills API）**：可复用技能库、SemVer 版本化、倒排搜索、6 个内置技能
+- 🖥️ **计算机操作（Computer Use）**：屏幕/鼠标键盘/浏览器抽象 + 动作执行器 + 步骤护栏 + 审批
+- 📁 **文件产物（Files API）**：沙箱工作区、产物追踪（sha256）、交付打包
+- 🎓 **教学认证（Academy）**：课程目录 + 4D AI Fluency（Discover/Develop/Deploy/Drive）评估 + 认证
+- 🔐 **零信任安全**：策略引擎 + 权限门禁 + 沙箱 + 追加审计
+- 🔌 **9 家 LLM Provider**：OpenAI/Anthropic/DeepSeek/Qwen/Kimi/GLM/Gemini/Ollama/Mock
+- 📊 **可观测**：Prometheus 指标 + W3C traceparent 追踪
+- 🖥️ **React 深色控制台** + CLI（doctor/employee/skill/computer/files/academy/task/serve）+ Python/TS SDK
+- ☸️ **部署**：Docker / docker-compose / K8s / Helm / CI + CodeQL；📚 **18+ 篇文档**
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/agentdesk.git
+cd agentdesk
+pip install -e .            # 核心零依赖，开箱即用
+agentdesk doctor
+agentdesk skill load
+agentdesk employee create --name Alice --role analyst
+agentdesk task "write a report file"
+pip install -e ".[api]" && agentdesk serve   # 控制面 + OpenAPI
+```
+
+**质量**：180 文件 / 50+ Python 核心模块 / 内核纯标准库零依赖 / 88 单元测试全绿 / Python+TS 双 SDK + React 控制台 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-agentdesk-blue)](https://github.com/huzjie/agentdesk)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/agentdesk/blob/main/LICENSE)
 
 ---
 
