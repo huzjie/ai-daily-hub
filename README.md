@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-24 | OpenAI 开源 Codex Harness + DeepSeek Harness「开放占位」+ harness-subagent 跨框架编排（"另一个 Harness 不是神谕"——多厂商模型交叉校验）| [**crossharness（跨 Harness 多智能体编排与交叉校验平台）**](https://github.com/huzjie/crossharness) | Python 3.9+ 零依赖内核 + 8 Harness + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 150 文件 | ✅ 已发布 |
 | 2026-08-21 | AI 从「对话助手」进化为「数字员工」（Anthropic Computer Use / Skills API / Files API + Claude Academy 4D AI Fluency + 阿里 Qwen-UI-Agent + Mistral Agentic Search）| [**agentdesk（企业级 AI 数字员工运营平台）**](https://github.com/huzjie/agentdesk) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 180 文件 | ✅ 已发布 |
 | 2026-08-20 | MCP 协议 2026-07-28 无状态化史诗级更新（移除握手/会话、头路由 + MRTR 多往返请求 + 列表缓存 ttlMs + EMA 企业级统一授权转正 + Scale AI MCP Atlas 评测）| [**mcplane（无状态 MCP 控制平面与网关）**](https://github.com/huzjie/mcplane) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 159 文件 | ✅ 已发布 |
 | 2026-08-19 | 上下文工程/图原生记忆集体霸榜（semantica 图原生上下文 + 腾讯 TencentDB-Agent-Memory 团队记忆中枢 + code-graph-rag 知识图谱 RAG） | [**memoria（图原生上下文与可问责 AI 记忆基础设施）**](https://github.com/huzjie/memoria) | Python 3.9+ 零依赖内核 + FastAPI + React + K8s/Helm | 161 文件 | ✅ 已发布 |
@@ -27,6 +28,41 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-24）
+
+### crossharness（跨 Harness 多智能体编排与交叉校验平台）
+
+**热点背景**：2026-08 下旬，AI Agent 基础设施进入「谁先开放谁占位」阶段——**OpenAI 开源 Codex Harness**（Apache-2.0），紧随 **DeepSeek Harness（DSH）** 开源（42 小时破 10 万星）；社区工具 **harness-subagent** 提出「跨 Harness 编排」：留在主 Harness 里，把子任务以一次性子代理分派给其他 Harness，核心理念是 **「另一个 Harness 不是神谕」——让单一模型审查自己只会复现自身盲区，引入不同厂商模型交叉校验才能暴露系统性缺陷**。
+
+**项目定位**：**crossharness** 把这一趋势落地为可部署的平台——给一个任务，自动拆解 → 派发到**不同 Harness**（Claude Code headless / Codex / Grok Build / DeepSeek Harness / OpenAI Codex Harness / Cursor Agent / 本地 / mock）→ 用**多家 LLM Provider**（OpenAI / Anthropic / DeepSeek / Qwen / Kimi / GLM / Gemini / Ollama）交叉投票 → 输出带盲区标注与共识结论的最终答案。核心内核**零第三方运行时依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🧭 **编排引擎**：任务分解（规则/LLM 双模式）、一次性子代理派发、并行调度、重试退避、结果合成
+- 🔀 **Harness 适配层**：8 种 Harness 统一 `run(prompt)` 接口，命令模板可配
+- ⚖️ **交叉校验引擎**：多数/全票/加权投票、共识阈值、多轮交叉辩论、盲区检测、JSON/MD/HTML 报告
+- 🔌 **Provider 适配层**：9 家 LLM（OpenAI 兼容 + Anthropic + Gemini + Ollama），`mock` 离线可跑
+- 🧩 **Agent Skills** 兼容 + 🧠 持久记忆 + 🔐 拒绝式默认策略/沙箱/审计 + 📊 Prometheus + W3C 追踪
+- 🖥️ **FastAPI 控制面** + CLI + **Python/TS 双 SDK** + React 深色控制台
+- ☸️ **部署**：Docker / docker-compose / K8s / Helm / CI + CodeQL；📚 **20+ 篇文档**
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/crossharness.git
+cd crossharness
+pip install -e .                # 内核零依赖，开箱即用
+crossharness doctor
+crossharness task run "review the payment module" --harness mock,mock
+crossharness verify "Is this SQL safe? SELECT * FROM users WHERE id=1"
+pip install -e ".[api]" && crossharness serve   # 控制面 + OpenAPI
+```
+
+**质量**：150 文件 / 91 Python 模块 / 内核纯标准库零依赖 / 8 Harness + 9 Provider / Python+TS 双 SDK + React 控制台 / Docker + K8s + Helm + CI + CodeQL / 端到端 mock 冒烟通过。
+
+[![GitHub](https://img.shields.io/badge/Repo-crossharness-blue)](https://github.com/huzjie/crossharness)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/crossharness/blob/main/LICENSE)
 
 ---
 
