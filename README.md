@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-25 | 微软开源 Agent Lightning v1.0（真实 Harness 部署环境做 RL 训练，无需改业务代码，6000 样本 Qwen3.5-9B SWE-bench 41.8%→56.4%）+ LLM-as-a-Verifier 自验证框架冲上热榜（0.11 美元开源模型打穿闭源）| [**agentlightning（企业级 Agent 强化学习训练与自验证平台）**](https://github.com/huzjie/agentlightning) | Python 3.9+ 零依赖内核 + 5 Harness + 5 Reward + PPO/GRPO + 自验证 + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 143 文件 | ✅ 已发布 |
 | 2026-08-24 | OpenAI 开源 Codex Harness + DeepSeek Harness「开放占位」+ harness-subagent 跨框架编排（"另一个 Harness 不是神谕"——多厂商模型交叉校验）| [**crossharness（跨 Harness 多智能体编排与交叉校验平台）**](https://github.com/huzjie/crossharness) | Python 3.9+ 零依赖内核 + 8 Harness + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 150 文件 | ✅ 已发布 |
 | 2026-08-21 | AI 从「对话助手」进化为「数字员工」（Anthropic Computer Use / Skills API / Files API + Claude Academy 4D AI Fluency + 阿里 Qwen-UI-Agent + Mistral Agentic Search）| [**agentdesk（企业级 AI 数字员工运营平台）**](https://github.com/huzjie/agentdesk) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 180 文件 | ✅ 已发布 |
 | 2026-08-20 | MCP 协议 2026-07-28 无状态化史诗级更新（移除握手/会话、头路由 + MRTR 多往返请求 + 列表缓存 ttlMs + EMA 企业级统一授权转正 + Scale AI MCP Atlas 评测）| [**mcplane（无状态 MCP 控制平面与网关）**](https://github.com/huzjie/mcplane) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 159 文件 | ✅ 已发布 |
@@ -28,6 +29,43 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-25）
+
+### agentlightning（企业级 Agent 强化学习训练与自验证平台）
+
+**热点背景**：2026-08-25，微软开源 **Agent Lightning v1.0**——用**部署时的真实 Agent Harness** 做强化学习训练，无需修改任何业务代码；官方实战 6000 条样本把 Qwen3.5-9B 的 SWE-bench Verified 从 41.8% 提升到 56.4%。同时 **LLM-as-a-Verifier** 自验证框架冲上 GitHub 热榜：best-of-N 自验证让 **0.11 美元的开源模型打穿闭源前沿模型**。智能体优化从「换更强的模型」「手工调参」走向「让模型在真实环境里被训练、被自己评判」。
+
+**项目定位**：**agentlightning** 把这两条主线落地为可部署平台——**在真实 Harness（Codex / DeepSeek Harness / Claude Code / 本地 / mock）里采样轨迹 → 用可插拔奖励信号（验证器/规则/安全/LLM-as-a-verifier/SWE-bench）打分 → PPO/GRPO 优化策略参数 → 训练后自验证（best-of-N / 多数投票 / 验证器当裁判）**。内核**纯 Python 标准库零第三方运行时依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🎯 **Rollout 引擎**：策略 × Harness 采样完整轨迹（steps/actions/observations），并发 workers
+- 🏆 **奖励建模**：5 种奖励函数 + CompositeReward 加权组合（rule / correctness / safety / verifier / swebench）
+- 🧠 **训练循环**：PPO（裁剪代理目标 + GAE 优势）与 GRPO（组内相对归一化）+ 早停 + 学习率调度
+- ⚖️ **自验证引擎**：best-of-N、多数投票、验证器当裁判（LLM-as-a-Verifier）
+- 🔌 **Provider 层**：9 家 LLM（OpenAI/Anthropic/DeepSeek/Qwen/Kimi/GLM/Gemini/Ollama）+ mock
+- 🔐 **安全**：默认拒绝策略引擎 + 追加审计 + 密钥脱敏 + 沙箱（subprocess/docker）
+- 📊 **可观测**：Prometheus 指标 + W3C 追踪；🗄️ **SQLite 持久化** runs/checkpoints/trajectories
+- 🖥️ **FastAPI 控制面**（8+ 路由）+ CLI（6 命令）+ **Python/TS 双 SDK** + React 深色控制台（零构建）
+- ☸️ **部署**：Docker / docker-compose / K8s / Helm / CI + CodeQL；📚 **9 篇文档 + pytest 套件**
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/agentlightning.git
+cd agentlightning
+pip install -r requirements.txt     # 内核零依赖，API 层用 fastapi
+agentlightning doctor               # 自检（离线可用）
+agentlightning train --task "Solve: implement fizzbuzz"
+agentlightning verify --task "capital of France" --n 4
+agentlightning serve --port 8000    # 控制面 + 控制台
+```
+
+**质量**：143 文件 / 108 Python 模块 / 内核纯标准库零依赖 / 5 Harness + 5 Reward + PPO/GRPO + 9 Provider / Python+TS 双 SDK + React 控制台 / Docker + K8s + Helm + CI + CodeQL / compileall 全过 + 端到端 mock 冒烟通过。
+
+[![GitHub](https://img.shields.io/badge/Repo-agentlightning-blue)](https://github.com/huzjie/agentlightning)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/agentlightning/blob/main/LICENSE)
 
 ---
 
