@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-26 | AgentRoom 论文引爆「多智能体真正并发编码」——用 CRDT 让多个 LLM Agent 在同一共享工作区并行编辑，摆脱「轮流操作」串行瓶颈 + 阿里 Qwen3.8-Flash-Next 开源（Qwen4 架构多模态 MoE）预热 agentic coding | [**codeweave（CRDT 驱动的多智能体并发编码平台）**](https://github.com/huzjie/codeweave) | Python 3.9+ 零依赖内核 + 树形 RGA 文本 CRDT + 版本向量 + 9 Provider + 并发执行/冗余/探索 + FastAPI + React + Python/TS SDK + K8s/Helm | 121 文件 | ✅ 已发布 |
 | 2026-08-25 | 微软开源 Agent Lightning v1.0（真实 Harness 部署环境做 RL 训练，无需改业务代码，6000 样本 Qwen3.5-9B SWE-bench 41.8%→56.4%）+ LLM-as-a-Verifier 自验证框架冲上热榜（0.11 美元开源模型打穿闭源）| [**agentlightning（企业级 Agent 强化学习训练与自验证平台）**](https://github.com/huzjie/agentlightning) | Python 3.9+ 零依赖内核 + 5 Harness + 5 Reward + PPO/GRPO + 自验证 + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 143 文件 | ✅ 已发布 |
 | 2026-08-24 | OpenAI 开源 Codex Harness + DeepSeek Harness「开放占位」+ harness-subagent 跨框架编排（"另一个 Harness 不是神谕"——多厂商模型交叉校验）| [**crossharness（跨 Harness 多智能体编排与交叉校验平台）**](https://github.com/huzjie/crossharness) | Python 3.9+ 零依赖内核 + 8 Harness + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 150 文件 | ✅ 已发布 |
 | 2026-08-21 | AI 从「对话助手」进化为「数字员工」（Anthropic Computer Use / Skills API / Files API + Claude Academy 4D AI Fluency + 阿里 Qwen-UI-Agent + Mistral Agentic Search）| [**agentdesk（企业级 AI 数字员工运营平台）**](https://github.com/huzjie/agentdesk) | Python 3.9+ 零依赖内核 + FastAPI + React 18 + Python/TS SDK + K8s/Helm | 180 文件 | ✅ 已发布 |
@@ -29,6 +30,39 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-26）
+
+### codeweave（CRDT 驱动的多智能体并发编码平台）
+
+**热点背景**：2026-08-26，ArXiv 论文 **AgentRoom** 提出用 **CRDT（无冲突复制数据类型）** 让多个 LLM Agent 在同一共享工作空间「真正并发」编辑代码，取代传统「轮流操作」的串行瓶颈；同期阿里千问预告开源 **Qwen3.8-Flash-Next**（下一代 Qwen4 架构多模态 MoE）为 agentic coding 场景预热。多智能体编程从「轮流排队」走向「无锁并发」，协作的壁垒从「模型能力」迁移到「执行与一致性」。
+
+**项目定位**：**codeweave** 把「CRDT 并发协作」落地为完整可部署平台——**字符级无锁合并 + 模块级分工 + 冗余鲁棒 + 并行探索**。内核**纯 Python 标准库零第三方运行时依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🌳 **树形 RGA 文本 CRDT**：字符级并发编辑 + 墓碑删除，操作携带显式锚点与节点身份，乱序投递自动缓冲集成，任意副本确定性收敛
+- 🧰 **完整 CRDT 工具箱**：版本向量 / 点上下文 / LWW Register / G-Counter / PN-Counter / OR-Set / OR-Map / 目录树
+- 📁 **虚拟文件系统**：工作区即一棵可合并的 CRDT 树 + 快照/恢复 + 工作区操作广播
+- 🤖 **多智能体编排**：9 家 LLM Provider（OpenAI/Anthropic/DeepSeek/Qwen/Kimi/GLM/Gemini/Ollama/mock）+ 任务规划 + 并发执行 + 冗余投票 + 并行探索
+- ⚖️ **冲突解决**：确定性 CRDT 合并 + 策略化裁决（CRDT/ours/theirs/last-writer/concat）
+- 🖥️ **双形态控制面**：FastAPI 优先 + stdlib 兜底 HTTP 服务器（零依赖也能跑）+ CLI
+- 📦 **完整工程化**：Python/TypeScript 双 SDK + React 深色控制台 + Docker/K8s/Helm/CI/CodeQL
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/codeweave.git
+cd codeweave
+python -m codeweave doctor                        # 自检（离线可用）
+python -m codeweave run "实现一个 API 服务" --provider mock --agents 3
+python -m codeweave serve                          # 控制面 + 控制台
+```
+
+**质量**：121 文件 / 72 Python 模块 / 内核纯标准库零依赖 / 35 单测全绿 / 9 Provider + CRDT 收敛性冒烟通过 / Python+TS 双 SDK + React 控制台 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-codeweave-blue)](https://github.com/huzjie/codeweave)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/codeweave/blob/main/LICENSE)
 
 ---
 
