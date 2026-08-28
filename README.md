@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-28 | Anthropic 发布 MHS「模型硬件标准」（硬件版 MCP）——Claude 直接操控机械臂/显微镜/量子计算机，QuEra 激光校准稳定率 58%→99.3%、单次校准 6 秒，Genentech 自主跑实验，AI 从软件走向物理世界 | [**hardmesh（AI 硬件控制网格与实验室自动化平台）**](https://github.com/huzjie/hardmesh) | Python 3.9+ 零依赖内核 + 设备抽象(MHS manifest) + 7 驱动(mock/tcp/http/serial/gpib/modbus/mqtt) + 闭环校准 + 安全护栏 + 9 Provider + FastAPI/stdlib 控制面 + React + Python/TS SDK + K8s/Helm | 133 文件 / 31 单测 | ✅ 已发布 |
 | 2026-08-26 | AgentRoom 论文引爆「多智能体真正并发编码」——用 CRDT 让多个 LLM Agent 在同一共享工作区并行编辑，摆脱「轮流操作」串行瓶颈 + 阿里 Qwen3.8-Flash-Next 开源（Qwen4 架构多模态 MoE）预热 agentic coding | [**codeweave（CRDT 驱动的多智能体并发编码平台）**](https://github.com/huzjie/codeweave) | Python 3.9+ 零依赖内核 + 树形 RGA 文本 CRDT + 版本向量 + 9 Provider + 并发执行/冗余/探索 + FastAPI + React + Python/TS SDK + K8s/Helm | 121 文件 | ✅ 已发布 |
 | 2026-08-25 | 微软开源 Agent Lightning v1.0（真实 Harness 部署环境做 RL 训练，无需改业务代码，6000 样本 Qwen3.5-9B SWE-bench 41.8%→56.4%）+ LLM-as-a-Verifier 自验证框架冲上热榜（0.11 美元开源模型打穿闭源）| [**agentlightning（企业级 Agent 强化学习训练与自验证平台）**](https://github.com/huzjie/agentlightning) | Python 3.9+ 零依赖内核 + 5 Harness + 5 Reward + PPO/GRPO + 自验证 + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 143 文件 | ✅ 已发布 |
 | 2026-08-24 | OpenAI 开源 Codex Harness + DeepSeek Harness「开放占位」+ harness-subagent 跨框架编排（"另一个 Harness 不是神谕"——多厂商模型交叉校验）| [**crossharness（跨 Harness 多智能体编排与交叉校验平台）**](https://github.com/huzjie/crossharness) | Python 3.9+ 零依赖内核 + 8 Harness + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 150 文件 | ✅ 已发布 |
@@ -30,6 +31,41 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-28）
+
+### hardmesh（AI 硬件控制网格与实验室自动化平台）
+
+**热点背景**：2026-08-28，Anthropic 发布 **MHS（Model Hardware Standard，模型硬件标准）** 第一阶段研究预览——被称为「硬件版 MCP」，让 Claude 直接读取并操控机械臂、显微镜、量子计算机激光系统等真实物理设备。在 QuEra 量子计算机激光校准中，Claude 将稳定率从人类专家的 **58% 提升至 99.3%**，单次校准从 5–10 分钟压缩到 **6 秒**；Genentech 药物发现实验也由 Claude 自主运行并自修复。AI 的能力边界正从「软件世界」走向「物理世界」。
+
+**项目定位**：**hardmesh** 把「AI 操控物理设备」落地为可部署、可扩展、可审计的完整平台。内核**纯 Python 标准库零第三方运行时依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🔌 **设备抽象层（MHS manifest）**：统一描述设备身份/能力/动作/参数，声明式注册机械臂/显微镜/激光器/传感器/恒温器
+- 🔗 **7 种驱动**：串口(RS-232/485) / TCP / HTTP/REST / GPIB(VISA) / Modbus / MQTT / 离线确定性 Mock
+- 📡 **MHS 协议层**：JSON 消息编解码 + schema 校验 + 消息路由
+- 🎯 **闭环校准引擎**：稳定率/精度目标函数 + 网格/随机/爬山优化器，复刻「58%→99.3%」范式
+- 🧪 **自动化实验编排**：声明式工作流 + 依赖拓扑 + 自修复重试 + 任务调度
+- 🛡️ **安全护栏**：拒绝式默认策略 + 物理限位 + N-of-M 审批 + 追加式审计日志
+- 🤖 **LLM 智能体控制**：9 家 Provider + ReAct 循环 + 工具封装
+- 📦 **完整工程化**：Python/TS 双 SDK + React 深色控制台 + Docker/K8s/Helm/CI/CodeQL
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/hardmesh.git
+cd hardmesh
+python -m hardmesh doctor                     # 自检（离线可用，5 类内置 mock 设备）
+python -m hardmesh read sensor-temp-01 --channel temperature
+python -m hardmesh calibrate laser-01 --target 0.99   # 闭环校准
+python -m hardmesh serve --host 0.0.0.0 --port 8080   # 控制面
+```
+
+**质量**：133 文件 / 82 Python 模块 / 内核纯标准库零依赖 / 31 单测全绿 / 端到端 mock 冒烟（doctor/read/act/calibrate/run/serve 全通）/ 12 篇文档 + 3 示例 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-hardmesh-blue)](https://github.com/huzjie/hardmesh)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/hardmesh/blob/main/LICENSE)
 
 ---
 
