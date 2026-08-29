@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-29 | AI 科研智能体爆发——Google Gemini Co-Scientist 生成假设并发现优于前沿模型的医疗架构；Anthropic 自动化对齐研究员成本 $150/时→$4/时、10 项基准超人类基线；OpenAI Rosalind Workbench 蛋白质/测序流水线；斯坦福 Terminal-Bench-Science 0.1 | [**sciforge（AI 科研智能体与自动化科学发现平台）**](https://github.com/huzjie/sciforge) | Python 3.9+ 零依赖内核 + 假设生成/排序 + 文献综述 + 实验设计 + mock 实验室 + 迭代研究员闭环 + 统计分析 + 可复现溯源 + 基准评测 + 5 科研角色 + 9 Provider + FastAPI/stdlib 控制面 + React + Python/TS SDK + K8s/Helm | 134 文件 / 31 单测 | ✅ 已发布 |
 | 2026-08-29 | OpenAI 筹备推出「Astra」长时程多智能体协作模型——多个 Agent 跨越会话/小时/天数持续协作解决高难度问题（大型项目推进、复杂数学求解），与 Sol/Terra/Luna 并列 | [**astraloom（长时程多智能体协作平台）**](https://github.com/huzjie/astraloom) | Python 3.9+ 零依赖内核 + 长期目标树分解(规则/LLM) + 三类持久记忆 + 检查点断点续跑 + 5 协作拓扑 + 共识引擎 + 9 Provider + FastAPI/stdlib 控制面 + React + Python/TS SDK + K8s/Helm | 138 文件 / 19 单测 | ✅ 已发布 |
 | 2026-08-28 | Anthropic 发布 MHS「模型硬件标准」（硬件版 MCP）——Claude 直接操控机械臂/显微镜/量子计算机，QuEra 激光校准稳定率 58%→99.3%、单次校准 6 秒，Genentech 自主跑实验，AI 从软件走向物理世界 | [**hardmesh（AI 硬件控制网格与实验室自动化平台）**](https://github.com/huzjie/hardmesh) | Python 3.9+ 零依赖内核 + 设备抽象(MHS manifest) + 7 驱动(mock/tcp/http/serial/gpib/modbus/mqtt) + 闭环校准 + 安全护栏 + 9 Provider + FastAPI/stdlib 控制面 + React + Python/TS SDK + K8s/Helm | 133 文件 / 31 单测 | ✅ 已发布 |
 | 2026-08-26 | AgentRoom 论文引爆「多智能体真正并发编码」——用 CRDT 让多个 LLM Agent 在同一共享工作区并行编辑，摆脱「轮流操作」串行瓶颈 + 阿里 Qwen3.8-Flash-Next 开源（Qwen4 架构多模态 MoE）预热 agentic coding | [**codeweave（CRDT 驱动的多智能体并发编码平台）**](https://github.com/huzjie/codeweave) | Python 3.9+ 零依赖内核 + 树形 RGA 文本 CRDT + 版本向量 + 9 Provider + 并发执行/冗余/探索 + FastAPI + React + Python/TS SDK + K8s/Helm | 121 文件 | ✅ 已发布 |
@@ -32,6 +33,42 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-29 · sciforge）
+
+### sciforge（AI 科研智能体与自动化科学发现平台）
+
+**热点背景**：2026-08-29，AI 科研智能体集中爆发——Google **Gemini Co-Scientist** 能自动生成假设、设计实验，发现的医疗架构超越多款前沿模型；Anthropic **自动化对齐研究员**把研究成本从 $150/时砍到 $4/时，10 项基准平均 6 小时超人类基线 20%；OpenAI 推出 **Rosalind Workbench** 蛋白质/测序流水线；斯坦福发布 **Terminal-Bench-Science 0.1** 评测科研工作流智能体；社区 **scientific-agent-skills** 已被 17.5 万科学家使用。共同信号：**科研瓶颈正从「人不够聪明」转向「人不够多、不够快」**。
+
+**项目定位**：**sciforge** 把这个结论工程化——把「自动化科研」做成能部署、能复现、能审计的完整平台。内核**纯 Python 标准库零第三方运行时依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🧪 **假设引擎**：从研究问题生成可证伪假设，按可检验性/新颖性打分排序
+- 🔁 **自动化研究员**：假设→排序→文献→实验→分析→精炼的迭代闭环（对标 Anthropic 自动化研究员）
+- ⚗️ **实验设计与 mock 实验室**：自动推导变量/控制/方法/样本量，确定性产出 + 真实实验室适配器接口
+- 📈 **统计分析**：Cohen's d 效应量 + 近似 Welch t 检验（纯标准库）
+- 🧾 **可复现溯源**：产物 SHA-256 哈希 + 血缘链，支持重放
+- 🏆 **基准评测**：hypothesis/literature/experiment/reasoning 四套件（对标 Terminal-Bench-Science）
+- 🤝 **多智能体角色**：科学家/审稿人/统计学家/文献员/实验员
+- 📡 **9 家 LLM Provider**：OpenAI/Anthropic/Gemini/DeepSeek/Qwen/Kimi/GLM/Ollama/Mock
+- 📦 **完整工程化**：FastAPI + 纯标准库控制面、CLI、Python/TS SDK、React 深色控制台、Docker/K8s/Helm/CI/CodeQL
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/sciforge.git
+cd sciforge
+python -m sciforge doctor                     # 自检（离线可用，9 Provider）
+python -m sciforge run "睡眠不足是否影响记忆巩固？"   # 完整科研闭环
+python -m sciforge benchmark                  # 基准评测
+python -m sciforge serve --port 8000          # 控制面
+```
+
+**质量**：134 文件 / 72 Python 模块 / 内核纯标准库零依赖 / 31 单测全绿 / 端到端 mock 冒烟（doctor/run/benchmark/serve 全通）/ 12 篇文档 + 8 示例 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-sciforge-blue)](https://github.com/huzjie/sciforge)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/sciforge/blob/main/LICENSE)
 
 ---
 
