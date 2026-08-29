@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-08-29 | OpenAI 筹备推出「Astra」长时程多智能体协作模型——多个 Agent 跨越会话/小时/天数持续协作解决高难度问题（大型项目推进、复杂数学求解），与 Sol/Terra/Luna 并列 | [**astraloom（长时程多智能体协作平台）**](https://github.com/huzjie/astraloom) | Python 3.9+ 零依赖内核 + 长期目标树分解(规则/LLM) + 三类持久记忆 + 检查点断点续跑 + 5 协作拓扑 + 共识引擎 + 9 Provider + FastAPI/stdlib 控制面 + React + Python/TS SDK + K8s/Helm | 138 文件 / 19 单测 | ✅ 已发布 |
 | 2026-08-28 | Anthropic 发布 MHS「模型硬件标准」（硬件版 MCP）——Claude 直接操控机械臂/显微镜/量子计算机，QuEra 激光校准稳定率 58%→99.3%、单次校准 6 秒，Genentech 自主跑实验，AI 从软件走向物理世界 | [**hardmesh（AI 硬件控制网格与实验室自动化平台）**](https://github.com/huzjie/hardmesh) | Python 3.9+ 零依赖内核 + 设备抽象(MHS manifest) + 7 驱动(mock/tcp/http/serial/gpib/modbus/mqtt) + 闭环校准 + 安全护栏 + 9 Provider + FastAPI/stdlib 控制面 + React + Python/TS SDK + K8s/Helm | 133 文件 / 31 单测 | ✅ 已发布 |
 | 2026-08-26 | AgentRoom 论文引爆「多智能体真正并发编码」——用 CRDT 让多个 LLM Agent 在同一共享工作区并行编辑，摆脱「轮流操作」串行瓶颈 + 阿里 Qwen3.8-Flash-Next 开源（Qwen4 架构多模态 MoE）预热 agentic coding | [**codeweave（CRDT 驱动的多智能体并发编码平台）**](https://github.com/huzjie/codeweave) | Python 3.9+ 零依赖内核 + 树形 RGA 文本 CRDT + 版本向量 + 9 Provider + 并发执行/冗余/探索 + FastAPI + React + Python/TS SDK + K8s/Helm | 121 文件 | ✅ 已发布 |
 | 2026-08-25 | 微软开源 Agent Lightning v1.0（真实 Harness 部署环境做 RL 训练，无需改业务代码，6000 样本 Qwen3.5-9B SWE-bench 41.8%→56.4%）+ LLM-as-a-Verifier 自验证框架冲上热榜（0.11 美元开源模型打穿闭源）| [**agentlightning（企业级 Agent 强化学习训练与自验证平台）**](https://github.com/huzjie/agentlightning) | Python 3.9+ 零依赖内核 + 5 Harness + 5 Reward + PPO/GRPO + 自验证 + 9 Provider + FastAPI + React + Python/TS SDK + K8s/Helm | 143 文件 | ✅ 已发布 |
@@ -31,6 +32,38 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-08-29）
+
+### astraloom（长时程多智能体协作平台）
+
+**热点背景**：2026-08-29，OpenAI 被曝正在筹备一个名为 **Astra** 的新模型系列，核心能力是**支持多个智能体进行长期协作**，去解决单次对话、单个智能体都啃不动的高难度问题（大型项目推进、复杂高等数学求解等），将与 Sol、Terra、Luna 并列。这与「一次性把任务交给一个 Agent 跑一轮」的传统范式截然不同——**真正的难题需要一支"数字团队"持续协作数小时、数天，并且能在中断后从断点继续**。
+
+**项目定位**：**astraloom** 把「长时程多智能体协作」落地为可部署、可扩展、可审计的完整平台。内核**纯 Python 标准库零第三方运行时依赖**，`mock` 模式完全离线可跑。
+
+**核心能力**：
+- 🎯 **长期目标分解**：宏大目标递归拆成目标树（规则 + LLM 双模式），「实现」阶段自动按业务模块拆出二级子目标
+- 🧠 **持久共享记忆**：情景/语义/程序三类记忆 + 零依赖向量化检索，跨会话跨智能体共享
+- 🔁 **断点续跑**：检查点管理器，任意时刻保存状态、崩溃后从断点恢复
+- 🤝 **多智能体协作**：5 种角色（规划/执行/审查/研究/质疑）+ 5 种拓扑 + 交接协议 + 共识引擎
+- 📡 **9 家 LLM Provider**：OpenAI/Anthropic/Gemini/DeepSeek/Qwen/Kimi/GLM/Ollama/Mock
+- 📦 **完整工程化**：FastAPI + 纯标准库控制面、CLI、Python/TS 双 SDK、React 深色控制台、Docker/K8s/Helm/CI/CodeQL
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/astraloom.git
+cd astraloom
+python -m astraloom doctor                     # 自检（离线可用，9 Provider）
+python -m astraloom run "为团队搭建一套智能运维平台"   # 端到端跑通
+python -m astraloom serve --host 0.0.0.0 --port 8000   # 控制面
+```
+
+**质量**：138 文件 / 79 Python 模块 / 内核纯标准库零依赖 / 19 单测全绿 / 端到端 mock 冒烟（doctor/run/serve 全通）/ 8 篇文档 + 6 示例 / Docker + K8s + Helm + CI + CodeQL。
+
+[![GitHub](https://img.shields.io/badge/Repo-astraloom-blue)](https://github.com/huzjie/astraloom)
+[![License](https://img.shields.io/badge/License-Apache--2.0-green)](https://github.com/huzjie/astraloom/blob/main/LICENSE)
 
 ---
 
