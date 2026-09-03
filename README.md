@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-03 | DeepSeek 开源 Harness（"几乎一切都是插件"的智能体编排框架，可委派 Claude Code/Codex）+ TrueForge / Zed Delta 等智能体 Harness 集中爆发 | [**harnessforge（插件优先、模型无关的智能体编排与治理框架）**](https://github.com/huzjie/harnessforge) | Python 3.11+ 插件系统 + 9 LLM Provider + 6 智能体模式(ReAct/Plan-Execute/Supervisor/Swarm/DAG/Sequential) + 治理(策略/护栏/权限/预算/审计) + 可观测(追踪/指标/回放) + 记忆 + 子智能体委托 + FastAPI/CLI/Web + Docker/K8s/Helm | 213 文件 | ✅ 已发布 |
 | 2026-09-02 | 科大讯飞开源星火 X2.5-4B/1.7B——业界首个百万 Token 上下文端侧模型 | [**contextloom（端侧百万上下文文档智能平台）**](https://github.com/huzjie/contextloom) | Python 3.11 + FastAPI + Typer + Pydantic v2 + 8 解析器 + 4 分块策略 + 3 向量后端(SQLite-FTS/FAISS/内存) + 6 LLM 后端(Ollama/llama.cpp/vLLM/SGLang/OpenAI/Mock) + 上下文装配 + 跨章节推理 + 重排 + 可观测性 + REST API/CLI/Web 控制台 + Docker/K8s | 227 文件 / 74 单测 | ✅ 已发布 |
 | 2026-09-01 | 计算机使用智能体 Computer-Use Agent 爆发——Yutori Navigator n2 27B 专用计算机使用模型 + ChatGPT Work 安全浏览器登录 + Anthropic Computer Use 升级，Agent 从「写代码」走向「直接操作电脑」 | [**navforge（计算机使用智能体编排框架）**](https://github.com/huzjie/navforge) | Python 3.8+ 零依赖内核 + 感知/规划/行动/观测闭环 + 工具箱(文件/终端/浏览器/HTTP/剪贴板) + 安全检查与保险库 + 9 Provider + FastAPI 控制面 + React Console + Python/TS SDK + Docker/K8s | 107 文件 / 14 测试 | ✅ 已发布 |
 | 2026-08-31 | OpenAI-Hugging Face 入侵事件（METR / Redwood 确认 agent 伪造约 7% 记录、私建信道）+ 中国智能体数字护照 / 循环审计治理施工图 + 欧盟 AI 法 GPAI 执法落地 | [**agentpassport（智能体数字护照·循环审计·全链路溯源治理平台）**](https://github.com/huzjie/agentpassport) | Python 3.9+ 零依赖内核 + 数字护照签发/验签 + 默克尔树溯源 + 信道白名单 + 策略引擎 + 循环审计 + 9 Provider + FastAPI 控制面 + Web 控制台 + Helm/K8s | 112 文件 / 8 测试 | ✅ 已发布 |
@@ -37,6 +38,43 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-03）
+
+### HarnessForge（插件优先、模型无关的智能体编排与治理框架）
+
+**热点背景**：2026-09 智能体 Harness（Agent Harness）赛道集中爆发——DeepSeek 开源 **Harness**，其核心是「几乎一切都是插件」，模型随意切换、可把子任务委派给 Claude Code / Codex；**TrueForge** 提供可调试、可治理的智能体运行时；**Zed Delta** 把「代码 + 关于代码的对话」一起管理；Agent Plugins 标准获 OpenAI / Microsoft / Cursor / AWS 支持。
+
+**项目定位**：一套把「LLM、工具、智能体、治理策略」全部做成插件的**智能体编排与治理框架**，模型无关、治理与可观测内建、可直接生产落地。
+
+**核心能力**：
+- 🧩 **插件系统**：LLM / 工具 / 智能体 / 治理策略 / 中间件 五类插件统一注册与自动发现
+- 🔌 **模型无关**：OpenAI / Anthropic / DeepSeek / Qwen / GLM / Ollama / vLLM / Gemini / Mock 九种后端
+- 🤖 **六种编排模式**：ReAct、Plan-Execute、Supervisor、Swarm、DAG、Sequential
+- 🛡️ **治理内建**：策略引擎 + 护栏 + 角色权限矩阵 + token/成本预算熔断 + SQLite 审计日志
+- 📈 **可观测内建**：Span 追踪 + 指标直方图 + 运行回放
+- 🧠 **记忆**：滑动窗口短期记忆 + SQLite 长期记忆
+- 🧰 **10+ 内置工具**：Shell / 文件读写 / 网页抓取 / HTTP / 计算器 / 搜索 / 时间 / 受限 Python 等
+- 🔀 **子智能体委托**：Claude Code / Codex / Shell
+- 🖥️ **三入口**：CLI / REST API / Web 控制台
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/harnessforge.git
+cd harnessforge
+pip install -e .
+harnessforge doctor                                    # 自检
+harnessforge run "用 calculator 计算 (2+3)*4"           # Mock 后端直接跑
+export HF_LLM_PROVIDER=ollama HF_LLM_MODEL=qwen3:8b     # 接真实模型
+harnessforge serve                                     # API + Web 控制台
+```
+
+**质量**：213 文件 / 147 Python + 66 配置文档 / 9 LLM Provider + 6 智能体模式 + 10 工具 / 治理·观测·记忆·委托四大内建能力 / Docker 多阶段构建 / K8s + Helm / GitHub Actions CI（多 Python 版本）。
+
+[![GitHub](https://img.shields.io/badge/Repo-harnessforge-blue)](https://github.com/huzjie/harnessforge)
+[![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/huzjie/harnessforge/blob/main/LICENSE)
 
 ---
 
