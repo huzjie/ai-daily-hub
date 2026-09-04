@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-04 | IFM/MBZUAI 发布 K2 Horizon——史上最完整完全开源模型舰队（0.9B→375B 六档、权重+数据+checkpoint+训练日志全开放、MoVA 稀疏注意力、Uno Diffusion 3 倍加速） | [**openfleet（开放模型舰队编排与动态路由平台）**](https://github.com/huzjie/openfleet) | Python 3.9+ 动态路由引擎（任务分类+5 策略+硬约束+回退熔断）+ 多后端推理（vLLM/Ollama/transformers/llama.cpp/Mock）+ 「完全开源」可复现审计（8 项产物+A+~D 评级）+ 40 张真实开源模型目录 + OpenAI 兼容 API/CLI/SDK + Docker/K8s/CI | 193 文件 / 55 单测全绿 | ✅ 已发布 |
 | 2026-09-03 | DeepSeek 开源 Harness（"几乎一切都是插件"的智能体编排框架，可委派 Claude Code/Codex）+ TrueForge / Zed Delta 等智能体 Harness 集中爆发 | [**harnessforge（插件优先、模型无关的智能体编排与治理框架）**](https://github.com/huzjie/harnessforge) | Python 3.11+ 插件系统 + 9 LLM Provider + 6 智能体模式(ReAct/Plan-Execute/Supervisor/Swarm/DAG/Sequential) + 治理(策略/护栏/权限/预算/审计) + 可观测(追踪/指标/回放) + 记忆 + 子智能体委托 + FastAPI/CLI/Web + Docker/K8s/Helm | 213 文件 | ✅ 已发布 |
 | 2026-09-02 | 科大讯飞开源星火 X2.5-4B/1.7B——业界首个百万 Token 上下文端侧模型 | [**contextloom（端侧百万上下文文档智能平台）**](https://github.com/huzjie/contextloom) | Python 3.11 + FastAPI + Typer + Pydantic v2 + 8 解析器 + 4 分块策略 + 3 向量后端(SQLite-FTS/FAISS/内存) + 6 LLM 后端(Ollama/llama.cpp/vLLM/SGLang/OpenAI/Mock) + 上下文装配 + 跨章节推理 + 重排 + 可观测性 + REST API/CLI/Web 控制台 + Docker/K8s | 227 文件 / 74 单测 | ✅ 已发布 |
 | 2026-09-01 | 计算机使用智能体 Computer-Use Agent 爆发——Yutori Navigator n2 27B 专用计算机使用模型 + ChatGPT Work 安全浏览器登录 + Anthropic Computer Use 升级，Agent 从「写代码」走向「直接操作电脑」 | [**navforge（计算机使用智能体编排框架）**](https://github.com/huzjie/navforge) | Python 3.8+ 零依赖内核 + 感知/规划/行动/观测闭环 + 工具箱(文件/终端/浏览器/HTTP/剪贴板) + 安全检查与保险库 + 9 Provider + FastAPI 控制面 + React Console + Python/TS SDK + Docker/K8s | 107 文件 / 14 测试 | ✅ 已发布 |
@@ -38,6 +39,41 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-04）
+
+### OpenFleet（开放模型舰队编排与动态路由平台）
+
+**热点背景**：2026-09-03 IFM（MBZUAI）发布 **K2 Horizon**——号称「AI 史上最大规模的完全开源模型舰队」：0.9B / 3.7B / 7B / 32B / 36B-A4B / 375B-A23B 六档模型，Apache 2.0，**连训练数据、中间 checkpoint、loss 日志、训练配方都开放**（远超「开放权重」）。还带来两项技术：**MoVA（Mixture-of-Value Attention）** 把稀疏化延伸到注意力层，**Uno Diffusion** 让 token 并行生成实现约 3 倍加速。同时 ModelScope 上 PyroDash 宣称「一次交接降低 96% 推理成本」，把「用小模型省钱、用大模型保质量」的**动态路由**推向台前。
+
+**项目定位**：一套不训练模型、而是在一堆异构模型之上做**动态路由 + 统一服务 + 开放程度审计**的工程化平台，让「模型舰队」真正可落地。
+
+**核心能力**：
+- 🧭 **动态路由引擎**：11 类任务分类器 + 质量/成本/延迟/均衡/自适应 5 种策略 + 成本/延迟硬约束 + 回退熔断
+- 🗂️ **舰队注册表**：ModelCard 数据模型 + YAML 舰队定义 + 能力/成本/延迟过滤
+- 🚀 **多后端推理**：vLLM / Ollama / transformers / llama.cpp / Mock 五后端统一 `generate()` 接口
+- 🔍 **完全开源审计**：8 项产物（权重/配置/checkpoint/日志/数据配方/训练代码/评估代码）加权打分 + A+~D 评级
+- 📚 **40 张真实模型目录**：K2 Horizon / Qwen3 / GLM / DeepSeek / Llama / Mistral / Phi / Gemma / GPT-OSS 等
+- 📈 **可观测**：指标/追踪/成本/延迟四维埋点 + Prometheus 导出
+- 🖥️ **三入口**：CLI / OpenAI 兼容 REST API / Python SDK
+
+**快速开始**：
+```bash
+git clone https://github.com/huzjie/openfleet.git
+cd openfleet
+pip install -e .
+openfleet doctor                                    # 自检
+openfleet route -p "用 Python 写快速排序"            # 动态路由（任务分类+选模型）
+openfleet audit                                     # 完全开源可复现审计
+openfleet serve                                     # OpenAI 兼容 API
+```
+
+**质量**：193 文件 / 97 Python + 40 模型卡 + 24 文档 / 55 单测全绿 / 动态路由 5 策略 + 多后端 + 审计引擎 + Docker 多阶段 + K8s + GitHub Actions CI（多 Python 版本）。
+
+[![GitHub](https://img.shields.io/badge/Repo-openfleet-blue)](https://github.com/huzjie/openfleet)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green)](https://github.com/huzjie/openfleet/blob/main/LICENSE)
 
 ---
 
