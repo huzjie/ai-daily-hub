@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-07 | 阿里千问开源首个自动驾驶视觉语言基础模型 Qwen-Drive-1.0-4B（统一 3D 感知 + 视觉问答 + 运动规划） | [**roadmind（自动驾驶视觉语言模型推理与规划平台）**](https://github.com/huzjie/roadmind) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 统一 3D 感知（检测/BEV/车道线/融合/跟踪）+ 场景/交通/风险 VQA + 运动规划（轨迹预测/直行变道停车/规则+模型决策/TTC 安全）+ 2D 运动学闭环仿真 + REST API/CLI/SDK + Docker/K8s/CI | 193 文件 / 27 单测全绿 | ✅ 已发布 |
 | 2026-09-04 | IFM/MBZUAI 发布 K2 Horizon——史上最完整完全开源模型舰队（0.9B→375B 六档、权重+数据+checkpoint+训练日志全开放、MoVA 稀疏注意力、Uno Diffusion 3 倍加速） | [**openfleet（开放模型舰队编排与动态路由平台）**](https://github.com/huzjie/openfleet) | Python 3.9+ 动态路由引擎（任务分类+5 策略+硬约束+回退熔断）+ 多后端推理（vLLM/Ollama/transformers/llama.cpp/Mock）+ 「完全开源」可复现审计（8 项产物+A+~D 评级）+ 40 张真实开源模型目录 + OpenAI 兼容 API/CLI/SDK + Docker/K8s/CI | 193 文件 / 55 单测全绿 | ✅ 已发布 |
 | 2026-09-03 | DeepSeek 开源 Harness（"几乎一切都是插件"的智能体编排框架，可委派 Claude Code/Codex）+ TrueForge / Zed Delta 等智能体 Harness 集中爆发 | [**harnessforge（插件优先、模型无关的智能体编排与治理框架）**](https://github.com/huzjie/harnessforge) | Python 3.11+ 插件系统 + 9 LLM Provider + 6 智能体模式(ReAct/Plan-Execute/Supervisor/Swarm/DAG/Sequential) + 治理(策略/护栏/权限/预算/审计) + 可观测(追踪/指标/回放) + 记忆 + 子智能体委托 + FastAPI/CLI/Web + Docker/K8s/Helm | 213 文件 | ✅ 已发布 |
 | 2026-09-02 | 科大讯飞开源星火 X2.5-4B/1.7B——业界首个百万 Token 上下文端侧模型 | [**contextloom（端侧百万上下文文档智能平台）**](https://github.com/huzjie/contextloom) | Python 3.11 + FastAPI + Typer + Pydantic v2 + 8 解析器 + 4 分块策略 + 3 向量后端(SQLite-FTS/FAISS/内存) + 6 LLM 后端(Ollama/llama.cpp/vLLM/SGLang/OpenAI/Mock) + 上下文装配 + 跨章节推理 + 重排 + 可观测性 + REST API/CLI/Web 控制台 + Docker/K8s | 227 文件 / 74 单测 | ✅ 已发布 |
@@ -39,6 +40,41 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-07）
+
+### RoadMind（自动驾驶视觉语言模型推理与规划平台）
+
+**热点背景**：2026-09-07 阿里千问开源 **Qwen-Drive-1.0-4B**——官方称「首个面向自动驾驶的视觉语言基础模型」，基于 Qwen3.5-4B 构建，统一 3D 感知与视觉问答，并扩展到运动规划。同期 DeepSeek-V4-Flash-Vision-Exp（视觉 + FP8/8bit 量化，MIT）、讯飞星火 X2.5（293B-A30B MoE，全国产算力）、Google TimesFM 3.0（时序预测基础模型）集中发布，「多模态视觉语言模型 + 专业化落地」成为当日主线。
+
+**项目定位**：不训练模型，而是在自动驾驶视觉语言模型之上做**多后端推理 + 感知 + 规划 + 服务化 + 评测**的工程化平台，让 Qwen-Drive 真正可落地为生产级工具。
+
+**核心能力**：
+- 🧠 **多后端推理引擎**：transformers / vLLM / Ollama / OpenAI 兼容 / 离线 Mock 五后端统一 generate()，失败回退 + 响应缓存
+- 👁️ **统一 3D 感知**：目标检测 + BEV 特征 + 车道线 + 多传感器融合 + IoU 跟踪
+- 💬 **视觉问答**：场景 / 交通要素（信号灯/标志）/ 驾驶风险三类问答
+- 🛣️ **运动规划**：轨迹预测（恒速/恒加速）+ 直行/变道/停车（五次多项式横向）+ 规则+模型融合决策 + TTC 安全校验
+- 🎮 **2D 运动学闭环仿真**：自车 + 障碍物 + 碰撞/越界检测，预置前车/切入场景
+- 🖥️ **三入口**：CLI / OpenAI 风格 REST API（FastAPI）/ Python SDK
+- 📊 **评测**：ADE / FDE / 碰撞率 + 基准定义
+- 🚀 **完整工程**：Docker 多阶段 + K8s + GitHub Actions CI + 模型目录 + 示例 + 文档 + 测试
+
+**快速开始**（无需 GPU，Mock 后端即可跑通全链路）：
+```bash
+git clone https://github.com/huzjie/roadmind.git
+cd roadmind
+pip install -e .
+roadmind doctor                                    # 自检
+roadmind --config configs/roadmind.mock.yaml plan   # 规划
+roadmind --config configs/roadmind.mock.yaml serve --port 8000  # 服务
+```
+
+**质量**：193 文件 / 多后端推理 + 感知 + 规划 + 仿真 + 评测 / 27 单测全绿 / Docker 多阶段 + K8s + 多 Python 版本 CI。
+
+[![GitHub](https://img.shields.io/badge/Repo-roadmind-blue)](https://github.com/huzjie/roadmind)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green)](https://github.com/huzjie/roadmind/blob/main/LICENSE)
 
 ---
 
