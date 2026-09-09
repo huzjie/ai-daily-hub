@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-09 | 蚂蚁开源百灵系列首个原生多模态大模型 Ling-3.0-flash-VL（124B 总参 / 5.5B 激活，原生图·文·视频理解，引入「观察-行动-验证-修正」视觉反馈闭环） | [**visionforge（视觉语言模型推理与视觉反馈闭环平台）**](https://github.com/huzjie/visionforge) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 14 类视觉感知（图像/视频/文档/OCR/定位/检测/分割/深度/动作/情绪等）+ OAVR 视觉反馈闭环（观察→行动→验证→修正 + 跨轮记忆）+ 14 个视觉 Agent + 28 张模型目录 + 流水线编排 + 评测体系 + CLI/REST API/SDK + Docker/K8s/CI | 185 文件 / 126 Python | ✅ 已发布 |
 | 2026-09-07 | 阿里千问开源首个自动驾驶视觉语言基础模型 Qwen-Drive-1.0-4B（统一 3D 感知 + 视觉问答 + 运动规划） | [**roadmind（自动驾驶视觉语言模型推理与规划平台）**](https://github.com/huzjie/roadmind) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 统一 3D 感知（检测/BEV/车道线/融合/跟踪）+ 场景/交通/风险 VQA + 运动规划（轨迹预测/直行变道停车/规则+模型决策/TTC 安全）+ 2D 运动学闭环仿真 + REST API/CLI/SDK + Docker/K8s/CI | 193 文件 / 27 单测全绿 | ✅ 已发布 |
 | 2026-09-04 | IFM/MBZUAI 发布 K2 Horizon——史上最完整完全开源模型舰队（0.9B→375B 六档、权重+数据+checkpoint+训练日志全开放、MoVA 稀疏注意力、Uno Diffusion 3 倍加速） | [**openfleet（开放模型舰队编排与动态路由平台）**](https://github.com/huzjie/openfleet) | Python 3.9+ 动态路由引擎（任务分类+5 策略+硬约束+回退熔断）+ 多后端推理（vLLM/Ollama/transformers/llama.cpp/Mock）+ 「完全开源」可复现审计（8 项产物+A+~D 评级）+ 40 张真实开源模型目录 + OpenAI 兼容 API/CLI/SDK + Docker/K8s/CI | 193 文件 / 55 单测全绿 | ✅ 已发布 |
 | 2026-09-03 | DeepSeek 开源 Harness（"几乎一切都是插件"的智能体编排框架，可委派 Claude Code/Codex）+ TrueForge / Zed Delta 等智能体 Harness 集中爆发 | [**harnessforge（插件优先、模型无关的智能体编排与治理框架）**](https://github.com/huzjie/harnessforge) | Python 3.11+ 插件系统 + 9 LLM Provider + 6 智能体模式(ReAct/Plan-Execute/Supervisor/Swarm/DAG/Sequential) + 治理(策略/护栏/权限/预算/审计) + 可观测(追踪/指标/回放) + 记忆 + 子智能体委托 + FastAPI/CLI/Web + Docker/K8s/Helm | 213 文件 | ✅ 已发布 |
@@ -40,6 +41,42 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-09）
+
+### VisionForge（视觉语言模型推理与视觉反馈闭环平台）
+
+**热点背景**：2026-09-09 蚂蚁集团开源百灵系列首个原生多模态大模型 **Ling-3.0-flash-VL**——124B 总参、5.5B 激活，原生支持图·文·视频理解，最大亮点是引入 **「观察-行动-验证-修正」（Observe-Act-Verify-Refine, OAVR）视觉反馈闭环**，让模型学会"看自己的输出再改"。同期 MiniCPM5-2B（面壁端侧小钢炮登顶 4B 以下榜单）、京东 JoyAI-Echo WM（实时可交互世界模型）等密集发布，「多模态 + 主动视觉自我修正」成为当日主线。
+
+**项目定位**：不训练模型，而是在 Ling-3.0-flash-VL 等开源多模态模型之上，把「多模态推理 + 视觉理解 + 视觉反馈闭环」工程化为一个**填配置即运行、可直接部署**的生产级视觉智能平台。
+
+**核心能力**：
+- 🧠 **多后端推理引擎**：transformers / vLLM / Ollama / OpenAI 兼容 / 离线 Mock 五后端统一 generate()，失败回退 + 响应缓存
+- 👁️ **14 类视觉感知**：图像 / 视频 / 文档 / 图表 / OCR / 定位 / 检测 / 分割 / 深度 / 动作 / 情绪 / 美学 / 关系 / 分类
+- 🔁 **OAVR 视觉反馈闭环**：观察 → 行动 → 验证（置信度 + 问题清单）→ 修正，跨轮记忆，直至收敛或轮数耗尽
+- 🤖 **14 个视觉 Agent**：GUI / 图表 / 场景 / 文档 / 描述 / 问答 / 定位 / OCR / 分类 / 摘要 / 对比 / 代码 / 数学 / 检索
+- 🖥️ **三入口**：CLI / FastAPI REST（含 OpenAI 兼容端点）/ Python SDK
+- 📊 **评测体系**：精确/模糊匹配 + 收敛率 + 内置基准 + Markdown/JSON 报告
+- 📚 **28 张模型目录**：覆盖开源与闭源主流 VLM 的 YAML 卡片
+- 🧪 **离线可跑**：Mock 后端 + 合成场景生成器，无 GPU 无网络端到端跑通
+- 🚀 **完整交付**：Docker 多阶段 + docker-compose + K8s + GitHub Actions CI
+
+**快速开始**（无需 GPU，Mock 后端即可跑通全链路）：
+```bash
+git clone https://github.com/huzjie/visionforge.git
+cd visionforge
+pip install -e .
+visionforge doctor                                   # 自检（5 后端 + 14 Agent）
+visionforge reflect "解析图表趋势"                     # 视觉反馈闭环
+visionforge serve --port 8000                        # REST 服务（/docs 交互文档）
+```
+
+**质量**：185 文件 / 126 Python / 14 感知器 + 14 Agent + 5 后端 / OAVR 闭环 / 28 模型卡 / compileall 零错 / Docker + K8s + 多 Python 版本 CI。
+
+[![GitHub](https://img.shields.io/badge/Repo-visionforge-blue)](https://github.com/huzjie/visionforge)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green)](https://github.com/huzjie/visionforge/blob/main/LICENSE)
 
 ---
 
