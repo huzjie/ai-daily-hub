@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-10 | 财跃星辰×上海交大开源金融推理大模型 Alpha-R1（8B，「语义门控」推理 + 两阶段强化学习，样本外金融推理大幅领先通用模型） | [**alphagate（语义门控金融推理与资产配置平台）**](https://github.com/huzjie/alphagate) | 语义门控引擎（市场状态建模→思路说明书语义匹配→阈值门控→可解释权重）+ 18 条配置思路（各附经济逻辑说明书与 YAML 策略卡）+ 两阶段强化学习（Stage1 偏好对齐 + Stage2 GRPO）+ 多智能体（研究员/配置官/风控官/报告官）+ 回测引擎（绩效/归因/VaR/CVaR/Calmar）+ 多数据源（mock/csv/akshare/tushare/yfinance/wind）+ FastAPI REST + OpenAI 兼容端点 + CLI/SDK + Docker/K8s/CI | 189 文件 / 118 Python / 20 模型卡 | ✅ 已发布 |
 | 2026-09-09 | 蚂蚁开源百灵系列首个原生多模态大模型 Ling-3.0-flash-VL（124B 总参 / 5.5B 激活，原生图·文·视频理解，引入「观察-行动-验证-修正」视觉反馈闭环） | [**visionforge（视觉语言模型推理与视觉反馈闭环平台）**](https://github.com/huzjie/visionforge) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 14 类视觉感知（图像/视频/文档/OCR/定位/检测/分割/深度/动作/情绪等）+ OAVR 视觉反馈闭环（观察→行动→验证→修正 + 跨轮记忆）+ 14 个视觉 Agent + 28 张模型目录 + 流水线编排 + 评测体系 + CLI/REST API/SDK + Docker/K8s/CI | 185 文件 / 126 Python | ✅ 已发布 |
 | 2026-09-07 | 阿里千问开源首个自动驾驶视觉语言基础模型 Qwen-Drive-1.0-4B（统一 3D 感知 + 视觉问答 + 运动规划） | [**roadmind（自动驾驶视觉语言模型推理与规划平台）**](https://github.com/huzjie/roadmind) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 统一 3D 感知（检测/BEV/车道线/融合/跟踪）+ 场景/交通/风险 VQA + 运动规划（轨迹预测/直行变道停车/规则+模型决策/TTC 安全）+ 2D 运动学闭环仿真 + REST API/CLI/SDK + Docker/K8s/CI | 193 文件 / 27 单测全绿 | ✅ 已发布 |
 | 2026-09-04 | IFM/MBZUAI 发布 K2 Horizon——史上最完整完全开源模型舰队（0.9B→375B 六档、权重+数据+checkpoint+训练日志全开放、MoVA 稀疏注意力、Uno Diffusion 3 倍加速） | [**openfleet（开放模型舰队编排与动态路由平台）**](https://github.com/huzjie/openfleet) | Python 3.9+ 动态路由引擎（任务分类+5 策略+硬约束+回退熔断）+ 多后端推理（vLLM/Ollama/transformers/llama.cpp/Mock）+ 「完全开源」可复现审计（8 项产物+A+~D 评级）+ 40 张真实开源模型目录 + OpenAI 兼容 API/CLI/SDK + Docker/K8s/CI | 193 文件 / 55 单测全绿 | ✅ 已发布 |
@@ -41,6 +42,44 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-10）
+
+### AlphaGate（语义门控金融推理与资产配置平台）
+
+**热点背景**：2026-09-10 财跃星辰（FinStep）联合上海交大安泰经济与管理学院开源金融推理大模型 **Alpha-R1（8B）**——凭借独创的「**语义门控**」（Semantic Gating）推理技术与「**两阶段强化学习**」训练框架，在金融推理任务样本外评测大幅领先通用大模型：能实时读懂市场环境，从成百上千条候选配置思路中动态挑出当下真正有效的少数几条，并用「人话」解释「为什么此刻该这样配置」。
+
+**项目定位**：不训练模型，而是在 Alpha-R1 等开源金融推理模型之上，把「市场状态建模 → 配置思路库 → 语义门控匹配 → 可解释配置决策 → 两阶段 RL 训练 → 回测评估」工程化为一个**填配置即运行、可直接部署**的生产级金融智能平台。
+
+**核心能力**：
+- 🧠 **语义门控引擎**：行情指标 + 财经新闻 → 市场状态描述，与每条思路的「经济逻辑说明书」做语义匹配，只放行「对症」思路
+- 📊 **18 条配置思路**：价值/动量/质量/低波/红利/成长/反转/趋势/防御/流动性/小盘/风险平价 + 行业轮动/宏观/事件/技术/资金流/情绪，各附 YAML 策略卡
+- 🤖 **多智能体流水线**：研究员 → 配置官 → 风控官 → 报告官，自动产出配置报告
+- 🎯 **两阶段强化学习**：Stage1 偏好对齐（状态→思路规则蒸馏）+ Stage2 GRPO（阈值优化）
+- 📈 **回测系统**：组合构建 + 绩效（夏普/Calmar）+ 归因 + 风控（VaR/CVaR/集中度）
+- 🔌 **可插拔**：数据源（mock/csv/akshare/tushare/yfinance/wind）+ 嵌入（hash/bow/tfidf）
+- 🌐 **三入口**：CLI / FastAPI REST（含 OpenAI 兼容端点）/ Python SDK
+- 🧪 **离线可跑**：mock 数据源 + 无模型嵌入，无 GPU 无网络端到端跑通
+- 🚀 **完整交付**：Docker 多阶段 + Compose + K8s + GitHub Actions CI
+
+**快速开始**（无需 GPU，mock 后端即可跑通全链路）：
+```bash
+git clone https://github.com/huzjie/alphagate.git
+cd alphagate
+pip install -e .
+alphagate doctor                                    # 自检（18 思路 + 20 模型卡 + 门控决策）
+alphagate gate --symbols 600000.SH,000001.SZ       # 语义门控配置决策（人话解释）
+alphagate backtest --symbols 600000.SH,000001.SZ   # 回测
+alphagate serve --port 8000                         # REST 服务（/docs 交互文档）
+alphagate train --iterations 20                     # 两阶段 RL 训练
+```
+
+**质量**：189 文件 / 118 Python / 20 模型卡 + 18 策略卡 / compileall 零错 / doctor·gate·backtest·train 冒烟全通过 / Docker + K8s + 多 Python 版本 CI。
+
+[![GitHub](https://img.shields.io/badge/Repo-alphagate-blue)](https://github.com/huzjie/alphagate)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green)](https://github.com/huzjie/alphagate/blob/main/LICENSE)
 
 ---
 
