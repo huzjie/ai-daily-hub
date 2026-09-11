@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-11 | DeepSeek 开源 V4.1-Flash（552B MoE、Causal-Encoder-Decoder 非对称结构、KV Cache 每 token 仅 890 字节 = 初代 1/437、1M 上下文缓存 < 1GB、MIT 许可，配套开源 DeepSelect/DeepJIT/deepseek-recipe） | [**longcache（超长上下文 MoE 推理引擎与 KV Cache 智能管理平台）**](https://github.com/huzjie/longcache) | KV Cache 智能管理（预算→FP4 量化→TopK 压缩→LRU 驱逐→滑动窗口/混合）+ DeepSelect 风格稀疏注意力（堆式 TopK O(n log k) + 4 稀疏模式 + 3 索引结构）+ CED 非对称推理引擎（20 编码器/20 解码器、分块/流式/投机解码）+ DeepJIT 风格 JIT 编译缓存（LRU+磁盘持久化、CUDA/昇腾）+ deepseek-recipe 风格协议转换（OpenAI 兼容）+ FastAPI REST + CLI/SDK + 9 模型卡 + Docker/K8s/CI | 129 文件 / 87 Python / 9 模型卡 | ✅ 已发布 |
 | 2026-09-10 | 财跃星辰×上海交大开源金融推理大模型 Alpha-R1（8B，「语义门控」推理 + 两阶段强化学习，样本外金融推理大幅领先通用模型） | [**alphagate（语义门控金融推理与资产配置平台）**](https://github.com/huzjie/alphagate) | 语义门控引擎（市场状态建模→思路说明书语义匹配→阈值门控→可解释权重）+ 18 条配置思路（各附经济逻辑说明书与 YAML 策略卡）+ 两阶段强化学习（Stage1 偏好对齐 + Stage2 GRPO）+ 多智能体（研究员/配置官/风控官/报告官）+ 回测引擎（绩效/归因/VaR/CVaR/Calmar）+ 多数据源（mock/csv/akshare/tushare/yfinance/wind）+ FastAPI REST + OpenAI 兼容端点 + CLI/SDK + Docker/K8s/CI | 189 文件 / 118 Python / 20 模型卡 | ✅ 已发布 |
 | 2026-09-09 | 蚂蚁开源百灵系列首个原生多模态大模型 Ling-3.0-flash-VL（124B 总参 / 5.5B 激活，原生图·文·视频理解，引入「观察-行动-验证-修正」视觉反馈闭环） | [**visionforge（视觉语言模型推理与视觉反馈闭环平台）**](https://github.com/huzjie/visionforge) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 14 类视觉感知（图像/视频/文档/OCR/定位/检测/分割/深度/动作/情绪等）+ OAVR 视觉反馈闭环（观察→行动→验证→修正 + 跨轮记忆）+ 14 个视觉 Agent + 28 张模型目录 + 流水线编排 + 评测体系 + CLI/REST API/SDK + Docker/K8s/CI | 185 文件 / 126 Python | ✅ 已发布 |
 | 2026-09-07 | 阿里千问开源首个自动驾驶视觉语言基础模型 Qwen-Drive-1.0-4B（统一 3D 感知 + 视觉问答 + 运动规划） | [**roadmind（自动驾驶视觉语言模型推理与规划平台）**](https://github.com/huzjie/roadmind) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 统一 3D 感知（检测/BEV/车道线/融合/跟踪）+ 场景/交通/风险 VQA + 运动规划（轨迹预测/直行变道停车/规则+模型决策/TTC 安全）+ 2D 运动学闭环仿真 + REST API/CLI/SDK + Docker/K8s/CI | 193 文件 / 27 单测全绿 | ✅ 已发布 |
@@ -42,6 +43,44 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-11）
+
+### LongCache（超长上下文 MoE 推理引擎与 KV Cache 智能管理平台）
+
+**热点背景**：2026-09-11 DeepSeek 正式开源 **V4.1-Flash**——552B 参数 MoE，采用全新 **Causal-Encoder-Decoder（CED）非对称结构**（20 层因果编码器 + 20 层解码器，prefill 激活 8B / decode 激活 16B），最震撼的是内存优化：FP4 KV Cache 让每 token 仅占 **890 字节**（初代 V1 的 1/437），完整 **1M token 上下文缓存不到 1GB**。同时配套开源 DeepSelect（稀疏注意力 TopK 算子，比 torch.topk 快 2~20 倍）、DeepJIT（CUDA/昇腾 JIT 编译缓存）、deepseek-recipe（API 协议转换）三个基础设施仓库。
+
+**项目定位**：不训练模型，而是把 V4.1-Flash 背后的「KV 极致压缩 + 稀疏注意力 + CED 非对称推理 + 协议转换」工程化为一个**填配置即运行、可直接部署**的生产级推理基础设施，无 GPU 无网络也能用 mock 后端端到端跑通全链路。
+
+**核心能力**：
+- 🧠 **KV Cache 智能管理**：内存预算换算 → 块管理 → FP4/INT8 量化 → TopK/池化/采样压缩 → LRU/FIFO/LFU 驱逐 → 滑动窗口 → 满窗口+滑动窗口混合，一条链把 1M 上下文压进 1GB
+- 🎯 **稀疏注意力**（DeepSelect 风格）：堆式 TopK 选择（O(n log k)）、local/sliding/global/block 四模式、streaming/cross_layer/hierarchical 三索引
+- ⚙️ **CED 非对称引擎**：20 编码器/20 解码器分离，分块 prefill + 流式 decode + 投机解码
+- ⚡ **JIT 编译缓存**（DeepJIT 风格）：kernel 缓存 key 生成 + LRU + 磁盘持久化，CUDA/昇腾双后端
+- 🔌 **协议转换**（deepseek-recipe 风格）：OpenAI 兼容 `/v1/chat/completions`、`/v1/completions`、`/v1/models` + 提示词编解码 + SSE
+- 🌐 **三入口**：CLI / FastAPI REST（OpenAI 兼容）/ Python SDK
+- 📦 **9 张内置模型卡**：V4.1-Flash、V4-Flash、V3.2、R1、Kimi K3、Qwen3.5-4B、MiniCPM5-2B、LongCat-2.0、Smaug-Agentic
+- 🧪 **离线可跑**：mock 后端 + 哈希指纹，无 GPU 无网络端到端跑通
+- 🚀 **完整交付**：Docker 多阶段 + Compose + K8s（Deployment/Service/HPA/ConfigMap）+ CI
+
+**快速开始**（无需 GPU，mock 后端即可跑通全链路）：
+```bash
+git clone https://github.com/huzjie/longcache.git
+cd longcache
+pip install -e .
+longcache doctor                                    # 自检（模型卡 + KV + 稀疏 + CED 推理）
+longcache list-models                               # 9 张模型卡
+longcache compress --context-len 1048576 --budget-gb 1   # KV 压缩预算模拟（FP4 → 890MB 达标）
+longcache bench --steps 1000                        # 性能评测
+longcache serve --port 8000                         # REST 服务（/docs 交互文档）
+```
+
+**质量**：129 文件 / 87 Python / 9 模型卡 / compileall 零错 / doctor·bench·compress 冒烟全通过 / Docker + K8s + 多 Python 版本 CI。
+
+[![GitHub](https://img.shields.io/badge/Repo-longcache-blue)](https://github.com/huzjie/longcache)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green)](https://github.com/huzjie/longcache/blob/main/LICENSE)
 
 ---
 
