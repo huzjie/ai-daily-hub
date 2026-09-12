@@ -6,7 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
-| 2026-09-11 | DeepSeek 开源 V4.1-Flash（552B MoE、Causal-Encoder-Decoder 非对称结构、KV Cache 每 token 仅 890 字节 = 初代 1/437、1M 上下文缓存 < 1GB、MIT 许可，配套开源 DeepSelect/DeepJIT/deepseek-recipe） | [**longcache（超长上下文 MoE 推理引擎与 KV Cache 智能管理平台）**](https://github.com/huzjie/longcache) | KV Cache 智能管理（预算→FP4 量化→TopK 压缩→LRU 驱逐→滑动窗口/混合）+ DeepSelect 风格稀疏注意力（堆式 TopK O(n log k) + 4 稀疏模式 + 3 索引结构）+ CED 非对称推理引擎（20 编码器/20 解码器、分块/流式/投机解码）+ DeepJIT 风格 JIT 编译缓存（LRU+磁盘持久化、CUDA/昇腾）+ deepseek-recipe 风格协议转换（OpenAI 兼容）+ FastAPI REST + CLI/SDK + 9 模型卡 + Docker/K8s/CI | 129 文件 / 87 Python / 9 模型卡 | ✅ 已发布 |
+| 2026-09-12 | 大晓机器人×南洋理工 S-Lab 开源统一多模态世界模型 Puffin-World（把物理/几何/外观定义为三种原生三维世界状态，Omni-Camera 相机表示、Puffin-16M 数据集，Stanford2D3D 横滚/俯仰/垂直视场角中位误差 0.29°/0.53°/1.62°） | [**puffinworld（统一多模态世界模型推理与具身智能平台）**](https://github.com/huzjie/puffinworld) | 三维世界状态（物理重力/几何深度/外观RGB 三态联合建模）+ Omni-Camera 相机表示（重力锚定+射线几何）+ 重力场感知（roll/pitch/地平线漂移）+ 自由视点合成（深度重投影）+ 三维重建（多视图点云融合+体素化）+ 闭环探索（预测→行动→观测→验证）+ Puffin-16M 三元组数据 + 4 大基准评测（Stanford2D3D/MegaDepth/TartanAir/LaMAR）+ 18 模型卡 + FastAPI REST/CLI + Docker/K8s/CI | 145 文件 / 99 Python / 18 模型卡 | ✅ 已发布 || 2026-09-11 | DeepSeek 开源 V4.1-Flash（552B MoE、Causal-Encoder-Decoder 非对称结构、KV Cache 每 token 仅 890 字节 = 初代 1/437、1M 上下文缓存 < 1GB、MIT 许可，配套开源 DeepSelect/DeepJIT/deepseek-recipe） | [**longcache（超长上下文 MoE 推理引擎与 KV Cache 智能管理平台）**](https://github.com/huzjie/longcache) | KV Cache 智能管理（预算→FP4 量化→TopK 压缩→LRU 驱逐→滑动窗口/混合）+ DeepSelect 风格稀疏注意力（堆式 TopK O(n log k) + 4 稀疏模式 + 3 索引结构）+ CED 非对称推理引擎（20 编码器/20 解码器、分块/流式/投机解码）+ DeepJIT 风格 JIT 编译缓存（LRU+磁盘持久化、CUDA/昇腾）+ deepseek-recipe 风格协议转换（OpenAI 兼容）+ FastAPI REST + CLI/SDK + 9 模型卡 + Docker/K8s/CI | 129 文件 / 87 Python / 9 模型卡 | ✅ 已发布 |
 | 2026-09-10 | 财跃星辰×上海交大开源金融推理大模型 Alpha-R1（8B，「语义门控」推理 + 两阶段强化学习，样本外金融推理大幅领先通用模型） | [**alphagate（语义门控金融推理与资产配置平台）**](https://github.com/huzjie/alphagate) | 语义门控引擎（市场状态建模→思路说明书语义匹配→阈值门控→可解释权重）+ 18 条配置思路（各附经济逻辑说明书与 YAML 策略卡）+ 两阶段强化学习（Stage1 偏好对齐 + Stage2 GRPO）+ 多智能体（研究员/配置官/风控官/报告官）+ 回测引擎（绩效/归因/VaR/CVaR/Calmar）+ 多数据源（mock/csv/akshare/tushare/yfinance/wind）+ FastAPI REST + OpenAI 兼容端点 + CLI/SDK + Docker/K8s/CI | 189 文件 / 118 Python / 20 模型卡 | ✅ 已发布 |
 | 2026-09-09 | 蚂蚁开源百灵系列首个原生多模态大模型 Ling-3.0-flash-VL（124B 总参 / 5.5B 激活，原生图·文·视频理解，引入「观察-行动-验证-修正」视觉反馈闭环） | [**visionforge（视觉语言模型推理与视觉反馈闭环平台）**](https://github.com/huzjie/visionforge) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 14 类视觉感知（图像/视频/文档/OCR/定位/检测/分割/深度/动作/情绪等）+ OAVR 视觉反馈闭环（观察→行动→验证→修正 + 跨轮记忆）+ 14 个视觉 Agent + 28 张模型目录 + 流水线编排 + 评测体系 + CLI/REST API/SDK + Docker/K8s/CI | 185 文件 / 126 Python | ✅ 已发布 |
 | 2026-09-07 | 阿里千问开源首个自动驾驶视觉语言基础模型 Qwen-Drive-1.0-4B（统一 3D 感知 + 视觉问答 + 运动规划） | [**roadmind（自动驾驶视觉语言模型推理与规划平台）**](https://github.com/huzjie/roadmind) | Python 3.9+ 多后端推理（transformers/vLLM/Ollama/OpenAI/Mock + 回退缓存）+ 统一 3D 感知（检测/BEV/车道线/融合/跟踪）+ 场景/交通/风险 VQA + 运动规划（轨迹预测/直行变道停车/规则+模型决策/TTC 安全）+ 2D 运动学闭环仿真 + REST API/CLI/SDK + Docker/K8s/CI | 193 文件 / 27 单测全绿 | ✅ 已发布 |
@@ -43,6 +43,25 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-12）
+
+### PuffinWorld（统一多模态世界模型推理与具身智能平台）
+
+**热点背景**：2026-09-12 大晓机器人联合南洋理工 S-Lab 开源统一多模态世界模型 **Puffin-World**——首次在同一个统一多模态框架内，把物理、几何、外观定义为三种**原生三维世界状态**，贯通重力场感知、自由视点仿真、三维世界生成与重建、闭环探索，让机器人在行动前预测「世界将处于什么状态」。物理状态由重力场 + 纬度图描述相机绝对朝向；几何状态以深度表达三维结构；外观状态对应 RGB。提出 **Omni-Camera** 相机表示，把重力锚定的绝对相机信息与基于射线的相对几何结合，解决长轨迹/连续旋转下地平线漂移与上下关系失真。同步开源 Puffin-16M 数据集（1500 万视觉-语言-相机三元组 + 100 万旋转轨迹），并为 28 个公开数据集约 4450 万张图像补全绝对相机位姿标注。
+
+**项目定位**：不训练模型，而是把 Puffin-World 背后的「三维世界状态统一建模 + Omni-Camera 相机表示 + 闭环探索」工程化为一个填配置即运行、可直接部署的具身智能平台，无 GPU 无网络也能用 mock 后端端到端跑通全链路。
+
+**核心能力**：
+- 🧭 **三维世界状态**：物理（重力+纬度图）/几何（深度+点云）/外观（RGB）三态联合建模
+- 📷 **Omni-Camera**：重力锚定绝对相机 + 射线相对几何，联合解决定位漂移
+- 🧲 **重力场感知**：从相机系重力解算绝对 roll/pitch，计算地平线与漂移误差
+- 🎥 **自由视点合成**：基于深度重投影，任意相机位姿下合成 RGB+深度（无需训练）
+- 🔄 **闭环探索**：预测→行动→观测→验证，行动前预测未来世界状态
+- 📦 **Puffin-16M 数据**：视觉-语言-相机三元组读写、位姿补全、增强
+- 📏 **4 大基准评测**：Stanford2D3D/MegaDepth/TartanAir/LaMAR
 
 ---
 
