@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-13 | 京东探索研究院开源视听世界模型 JoyAI-EchoWM（同一框架统一生成视频+环境音+音乐+语音，实时响应用户操作，统一「相机意图」把键盘/手柄映射为连续 6-DoF 轨迹，第一/第三人称共用一套控制接口，WBench Navigation 158 案例均分 81.7、一致性 89.8、交互性 87.2） | [**echoworld（视听世界模型推理与实时交互平台）**](https://github.com/huzjie/echoworld) | 统一相机意图→连续 6-DoF 轨迹（四元数/SE(3)/Catmull-Rom 平滑）+ 同框架视听生成（程序化场景渲染 + 环境音/音乐/语音 DSP 合成）+ 实时交互闭环 + 视听记忆（关键帧+音频指纹抗漂移）+ WBench 风格评测（一致性/交互性/连贯性）+ 4 场景/11 模型卡 + FastAPI REST/WebSocket + CLI + Docker/K8s/CI | 152 文件 / 104 Python | ✅ 已发布 |
 | 2026-09-12 | 大晓机器人×南洋理工 S-Lab 开源统一多模态世界模型 Puffin-World（把物理/几何/外观定义为三种原生三维世界状态，Omni-Camera 相机表示、Puffin-16M 数据集，Stanford2D3D 横滚/俯仰/垂直视场角中位误差 0.29°/0.53°/1.62°） | [**puffinworld（统一多模态世界模型推理与具身智能平台）**](https://github.com/huzjie/puffinworld) | 三维世界状态（物理重力/几何深度/外观RGB 三态联合建模）+ Omni-Camera 相机表示（重力锚定+射线几何）+ 重力场感知（roll/pitch/地平线漂移）+ 自由视点合成（深度重投影）+ 三维重建（多视图点云融合+体素化）+ 闭环探索（预测→行动→观测→验证）+ Puffin-16M 三元组数据 + 4 大基准评测（Stanford2D3D/MegaDepth/TartanAir/LaMAR）+ 18 模型卡 + FastAPI REST/CLI + Docker/K8s/CI | 145 文件 / 99 Python / 18 模型卡 | ✅ 已发布 |
 | 2026-09-11 | DeepSeek 开源 V4.1-Flash（552B MoE、Causal-Encoder-Decoder 非对称结构、KV Cache 每 token 仅 890 字节 = 初代 1/437、1M 上下文缓存 < 1GB、MIT 许可，配套开源 DeepSelect/DeepJIT/deepseek-recipe） | [**longcache（超长上下文 MoE 推理引擎与 KV Cache 智能管理平台）**](https://github.com/huzjie/longcache) | KV Cache 智能管理（预算→FP4 量化→TopK 压缩→LRU 驱逐→滑动窗口/混合）+ DeepSelect 风格稀疏注意力（堆式 TopK O(n log k) + 4 稀疏模式 + 3 索引结构）+ CED 非对称推理引擎（20 编码器/20 解码器、分块/流式/投机解码）+ DeepJIT 风格 JIT 编译缓存（LRU+磁盘持久化、CUDA/昇腾）+ deepseek-recipe 风格协议转换（OpenAI 兼容）+ FastAPI REST + CLI/SDK + 9 模型卡 + Docker/K8s/CI | 129 文件 / 87 Python / 9 模型卡 | ✅ 已发布 |
 | 2026-09-10 | 财跃星辰×上海交大开源金融推理大模型 Alpha-R1（8B，「语义门控」推理 + 两阶段强化学习，样本外金融推理大幅领先通用模型） | [**alphagate（语义门控金融推理与资产配置平台）**](https://github.com/huzjie/alphagate) | 语义门控引擎（市场状态建模→思路说明书语义匹配→阈值门控→可解释权重）+ 18 条配置思路（各附经济逻辑说明书与 YAML 策略卡）+ 两阶段强化学习（Stage1 偏好对齐 + Stage2 GRPO）+ 多智能体（研究员/配置官/风控官/报告官）+ 回测引擎（绩效/归因/VaR/CVaR/Calmar）+ 多数据源（mock/csv/akshare/tushare/yfinance/wind）+ FastAPI REST + OpenAI 兼容端点 + CLI/SDK + Docker/K8s/CI | 189 文件 / 118 Python / 20 模型卡 | ✅ 已发布 |
@@ -44,6 +45,25 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+
+---
+
+## 🏆 今日精选（2026-09-13）
+
+### EchoWorld（视听世界模型推理与实时交互平台）
+
+**热点背景**：2026-09-11 京东探索研究院在 JDD 大会开源视听世界模型 **JoyAI-EchoWM**——在同一个框架内同时生成视频、环境音、音乐与语音，并实时响应用户操作。核心创新是统一「**相机意图（Camera-Intent）**」表示，把键盘/手柄离散操作映射为连续 **6-DoF 轨迹**，让第一人称与第三人称共用同一套控制接口。在 158 个 WBench Navigation 案例上取得 81.7 平均分（一致性 89.8、交互性 87.2），但尚无显式持久三维记忆，长时生成仍可能漂移。
+
+**项目定位**：不训练模型，而是把 EchoWM 的「统一相机意图 + 同框架视听生成 + 实时交互」范式工程化为一个填配置即运行、可直接部署的视听世界模型平台，无 GPU 无网络也能用确定性内核（程序化场景 + DSP 音频）端到端跑通全链路。
+
+**核心能力**：
+- 🎮 **统一相机意图**：键盘/文本/JSON 操作 → 相机意图 → 连续 6-DoF 轨迹（四元数 slerp + Catmull-Rom）
+- 🎬 **同框架视听生成**：视频帧（射线求交渲染）+ 环境音（1/f 噪声）+ 音乐（和弦/旋律）+ 语音（共振峰）
+- 🔄 **实时交互闭环**：输入 → 更新位姿 → 生成视听 → 输出，第一/第三人称统一
+- 🧠 **视听记忆**：关键帧 + 音频指纹，缓解长时生成漂移
+- 📏 **WBench 风格评测**：一致性 / 交互性 / 连贯性三项指标 + 18 案例
+- 🎧 **完整音频引擎**：环境音 7 预设、音乐 4 风格、混响、空间双耳音频、音效
+- 🌆 **程序化场景**：corridor/outdoor/city/ocean 四场景 + 后处理 + PNG 帧编码
 
 ---
 
