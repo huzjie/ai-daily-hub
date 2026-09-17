@@ -6,6 +6,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-09-17 | 上海 AI Lab 开源 Atria Dawn Preview（744B MoE 智能体基础模型，MIT 协议、256K 上下文、基于 GLM-5.2，核心是可验证经验流水线 VEP——把「分析→编码→执行→复盘」长程闭环 grounding 到真实可执行环境，AutomationBench 53.8 / BrowseComp 92.5 / DeepSearchQA 96.0 / CyberGym 86.5 / BFCL v4 77.0） | [**vepforge（可验证经验流水线驱动的长程自主智能体执行平台）**](https://github.com/huzjie/vepforge) | 可验证经验流水线 VEP（任务目标/智能体轨迹/中间产物/外部证据四实体可验证连接）+ 四阶段长程闭环（分析→编码→执行→复盘 + 失败恢复）+ 10 类可验证工具（shell/python/http/file/search/json/csv/regex/calc/time）+ 本地/Docker 沙箱运行时 + 6 验证器（退出码/哈希/HTTP/JSON/测试结果/非空）+ 经验存储与向量检索 + 多 LLM 后端（mock/OpenAI 兼容/Anthropic 兼容）+ 五类智能体基准评测 + FastAPI REST/OpenAI 兼容端点 + CLI/SDK + Docker/K8s/CI | 160 文件 / 110 Python / 29 单测 | ✅ 已发布 |
 | 2026-09-16 | 紫东太初开源 ZDTaichu5.0-9B（面向物理世界的 9B 通用多模态大模型，空间感知+跨视角变换+具身任务规划，自适应循环推理「熵门控」——哪个 token 拿不准就在那里多算几轮，九大空间理解基准 8 项组别第一，AI2D 91.48/IFEval 93.7/AIME 89.2） | [**spatialcore（面向物理世界的空间理解与自适应循环推理引擎）**](https://github.com/huzjie/spatialcore) | 空间感知（几何/坐标变换/针孔相机/深度估计/15 种定性关系推理/场景图/跨视角重投影）+ 熵门控自适应循环推理（循环 Transformer 层块+熵门控+循环深度路由）+ 具身任务规划（STRIPS 规划/A*·RRT·PRM 路径/数值逆运动学/抓取姿态）+ 任意分辨率视觉（patch 化/多图/长序列视频）+ 多智能体编排 + 12 模型卡/10 任务模板/8 场景配置 + FastAPI REST/CLI + Docker/K8s/CI | 160 文件 / 90 Python / 12 模型卡 | ✅ 已发布 |
 | 2026-09-15 | 上海AI实验室×上海交大 LUMIA 开源潜空间语言模型 NCP-ArchPreview（8.9B，联合训练「下一 token + 下一概念」预测，仅 51.3% 训练 token 即达 OLMo-3-7B 最终 loss，下游均分 +2.45、GSM8K +5.99，概念注入 drafter 接受长度 +4.17%，17M 参数轻量领域自适应） | [**conceptforge（潜空间语言模型训练与推理平台）**](https://github.com/huzjie/conceptforge) | 概念表示（跨 token 语义单元聚合）+ Product Quantization（32 codebooks×128 codewords）+ 概念预测模块（8 层因果 Transformer）+ 16/8/16 因果 Transformer 主模型 + 联合损失（token CE + concept CE）+ 两阶段课程 + 投机解码（概念注入 drafter）+ 轻量 VQ 领域自适应 + 18 模型卡/8 基准/4 配置预设 + FastAPI REST/CLI + Docker/K8s/CI | 163 文件 / 88 Python / 18 模型卡 | ✅ 已发布 |
 | 2026-09-13 | 京东探索研究院开源视听世界模型 JoyAI-EchoWM（同一框架统一生成视频+环境音+音乐+语音，实时响应用户操作，统一「相机意图」把键盘/手柄映射为连续 6-DoF 轨迹，第一/第三人称共用一套控制接口，WBench Navigation 158 案例均分 81.7、一致性 89.8、交互性 87.2） | [**echoworld（视听世界模型推理与实时交互平台）**](https://github.com/huzjie/echoworld) | 统一相机意图→连续 6-DoF 轨迹（四元数/SE(3)/Catmull-Rom 平滑）+ 同框架视听生成（程序化场景渲染 + 环境音/音乐/语音 DSP 合成）+ 实时交互闭环 + 视听记忆（关键帧+音频指纹抗漂移）+ WBench 风格评测（一致性/交互性/连贯性）+ 4 场景/11 模型卡 + FastAPI REST/WebSocket + CLI + Docker/K8s/CI | 152 文件 / 104 Python | ✅ 已发布 |
@@ -45,8 +46,20 @@
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
 | 2026-08-11 | CSA CoreBreak AI Agent 安全漏洞族（CVE-2026-18830/18236/64650）| [**AegisAgent（Agent 运行时安全网关）**](https://github.com/huzjie/aegisagent) | Python 3.13 + stdlib 内核 + REST API + 单文件 Web 控制台 | 248 文件 | ✅ 已发布 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
+| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
 | 2026-08-10 | Claude Code 跨会话消息 / YC QM 多Agent / OpenAI Multi-Agent API | [**AgentMesh（多Agent编排平台）**](https://github.com/huzjie/agentmesh) | Python 3.13 + FastAPI + React 19 + WebSocket | 222 文件 / 116 测试 | ✅ 已发布 |
+| 2026-08-10 | [agentmesh](https://github.com/huzjie/agentmesh) | 企业级多Agent跨会话协作编排平台：5大拓扑+消息总线+沙箱隔离+RBAC+7家Provider |
 | 2026-07-31 | Kimi K3 开源 / 多模型百花齐放 | [**Unified AI Gateway（统一 AI 网关）**](https://github.com/huzjie/unified-ai-gateway) | Node.js 20 + TypeScript + Fastify + React 19 + SQLite | 874 文件 / 442 测试 | ✅ 已发布 |
+| 2026-07-31 | [unified-ai-gateway](https://github.com/huzjie/unified-ai-gateway) | 统一 AI 网关：一套接口对接 Kimi/DeepSeek/OpenAI 等 7 家 LLM，智能路由+限流熔断+成本追踪 |
 
 ---
 
@@ -1240,18 +1253,6 @@ cd src/agentmesh/web && npm install && npm run dev   # 控制台 http://localhos
 
 | 日期 | 项目 | 说明 |
 |---|---|---|
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-11 | [aegisagent](https://github.com/huzjie/aegisagent) | AI Agent 运行时安全网关：密码学工具调用溯源 + 策略引擎 + 沙箱隔离 + 人工审批 + MCP 安全代理 |
-| 2026-08-10 | [agentmesh](https://github.com/huzjie/agentmesh) | 企业级多Agent跨会话协作编排平台：5大拓扑+消息总线+沙箱隔离+RBAC+7家Provider |
-| 2026-07-31 | [unified-ai-gateway](https://github.com/huzjie/unified-ai-gateway) | 统一 AI 网关：一套接口对接 Kimi/DeepSeek/OpenAI 等 7 家 LLM，智能路由+限流熔断+成本追踪 |
 
 ---
 
