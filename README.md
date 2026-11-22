@@ -1,12 +1,12 @@
 # AI Daily Hub — 每日 AI 热点项目索引
 
-> **每天一个 AI 热点，一个「填配置就能跑」的开源项目。** 70+ 个零依赖、可复现的 AI 框架合集——每个都对应一个真实热点的**完整工程实现**（不是话题、不是示例），附技术原理拆解 + 可复用代码 + 工程技巧。
+> **每天一个 AI 热点，一个「填配置就能跑」的开源项目。** 71+ 个零依赖、可复现的 AI 框架合集——每个都对应一个真实热点的**完整工程实现**（不是话题、不是示例），附技术原理拆解 + 可复用代码 + 工程技巧。
 
 ## 👀 3 秒看懂：这个仓库是干嘛的？
 
 | 你的疑问 | 答案 |
 |---|---|
-| 📦 我在看什么？ | 一个日更的 AI 开源项目库，70+ 个项目，每个都是**完整可运行的代码** |
+| 📦 我在看什么？ | 一个日更的 AI 开源项目库，71+ 个项目，每个都是**完整可运行的代码** |
 | 🎁 我能得到什么？ | 每个热点背后的**技术原理 + 可复用代码 + 工程技巧**，照抄就能用 |
 | 🔍 怎么找我要的？ | 看「今日精选」了解最新，或按下方「六大技术线」/「日期索引」精确定位 |
 | 🎯 适合谁？ | AI 工程师、架构师、想搞懂「热点原理 → 工程落地」的人 |
@@ -22,7 +22,7 @@
 
 ## 🧭 技术导览：一条主线，六条技术线
 
-> 这 70+ 个项目不是零散堆砌，而是同一条主线在不同方向的分支——**把每个 AI 热点背后的核心技术原理，工程化成一套零依赖、可运行、可复现的开源框架**。统一套路：纯 Python 零依赖内核 + 确定性可训练 mock + 多后端 + 基准 + OpenAI 兼容 HTTP + CLI/Docker/K8s/CI。
+> 这 71+ 个项目不是零散堆砌，而是同一条主线在不同方向的分支——**把每个 AI 热点背后的核心技术原理，工程化成一套零依赖、可运行、可复现的开源框架**。统一套路：纯 Python 零依赖内核 + 确定性可训练 mock + 多后端 + 基准 + OpenAI 兼容 HTTP + CLI/Docker/K8s/CI。
 
 ### 六大技术线（按主题导航）
 
@@ -53,6 +53,7 @@
 
 | 日期 | 热点主题 | 项目 | 技术栈 | 规模 | 状态 |
 |---|---|---|---|---|---|
+| 2026-11-22 | Google Gemini API 上线 Tool Retrieval 预览（tool_search + defer_loading：智能体让庞大工具库「待命」，只在任务需要时按语义检索加载工具参数 schema，大幅削减上下文成本） | [**lazyforge（Agent 工具库按需检索与延迟加载网关）**](https://github.com/huzjie/lazyforge) | 把「工具库从上下文卸载」落成可运行、可拆解、可复用的工程——① stub/schema 解耦（注册表只常驻「名字+一句话摘要」，完整 JSON Schema 由 DeferredLoader 按 ref 取）② 零依赖语义检索（TF-IDF + 特征哈希 + BM25，中文停用字+二元组分词，余弦/点积相似度）③ 混合融合+重排（dense/sparse min-max 归一加权，工具名/标签命中强 boost）④ 上下文预算引擎（零依赖 token 估算，load/defer/检索三档成本，超限按分数降级）⑤ 四类适配器统一分发（function/http/cli/mcp + 参数校验）；实现思路：上下文成本从 O(N) 压到 O(k)——stub 常驻、schema 按需，检索模式连 stub 都不常驻，60 工具 k=3 省 94%；复用要点：① 中文分词先加停用字表，否则「生成一张发票」和「生成一张流程图」会因「一张」撞车（干货块 A）② stub 摘要写「动作+对象」、工具名带动作动词（干货块 B）③ defer 只省 schema 不省 stub，说「省 90%」要用检索模式口径（干货块 C）④ 评测用闭式 oracle，recall/MRR/skill 单调不减、无需大模型打分（干货块 D）；填一份 JSON 即可 `python -m lazyforge doctor` 跑通整条链路，换自己的工具库把 library.path 指向 JSON/YAML 即可 | 零依赖 / 72 文件 / 53 Py / 19 文档配置 / 22 单测 / CLI 5 命令 / Docker/Compose/CI / 内置 60 工具演示库 | ✅ 已发布 |
 | 2026-11-21 | Thinking Machines Lab（前 OpenAI CTO Mira Murati 创办）开源 Inkling 2 Mini（26.4B 循环 Transformer，每 token 激活 3.4B，中间 12 层循环跑 3 次等效 48 层，1M 上下文，20GB 检查点可本地跑） | [**loopinfer（循环 Transformer / Looped MoE 推理运行时）**](https://github.com/huzjie/loopinfer) | 把「小参数跑出等效深度」落成可运行、可拆解、可复用的工程——① 循环层调度（前置 + passes×循环 + 后置三段，等效深度 = loop_start + passes×M + suffix，参数只存 24 层、深度到 48）② 跨 pass 消息（每条循环层一个 layer-level memory 向量 + 可学习 gate，pass k 注入 pass k+1，把「无脑重复」变成「逐趟递进」）③ 稀疏 MoE（top-k 内 softmax + 负载均衡损失，专家**惰性生成**避免 n_experts×n_layers 预生成拖慢 init）④ 推测解码（草稿连猜 K 个 token、主模型一次并行验证，加速比 ≈ K/(1+K/draft_speedup)）⑤ NVFP4/MXFP8 量化（块级 scale，检查点压到 20GB 级）；实现思路：把「深度」从「多少层」解耦成「多少 pass」——参数（显存）不涨、深度（表达）翻倍、算力按等效深度走，最适合本地/端侧；复用要点：① 循环层 + 跨 pass 消息伪代码可直接照抄（README 干货块 A）② 循环深度 vs 参数量 vs 算力权衡表（干货块 B）③ MoE 三坑：top-k 内归一、共享专家兜底、不加载均衡损失会塌缩（干货块 C）④ 推测解码 K 动态选（干货块 D）⑤ FP4 scale 必须分块（干货块 E）；填一份 JSON 即可 `python -m loopinfer doctor` 跑通整条链路，换真实 Inkling 权重只需替换 model 层 | 零依赖 / 153 文件 / 93 Py / 33 文档 / 确定性可训练 mock（skill 单调趋 1）/ 34 单测 / CLI 7 命令 / Py+TS SDK / Web / Docker/K8s/Helm/CI | ✅ 已发布 |
 | 2026-11-20 | 腾讯混元 Hy4 大模型正式开源（MoE 总参 770B / 激活 49B，100 万 token 上下文，靠「混合注意力 + LatentMoE + Engram 参数」把 KV cache 压到 Hy3 的 1/24，Apache 2.0） | [**hybridctx（百万 token 长上下文 MoE 推理运行时）**](https://github.com/huzjie/hybridctx) | 把「1M 上下文 + 微型 KV」落成可运行、可拆解、可复用的工程——① 混合注意力（局部窗口 softmax 全注意力 + 全局线性注意力，把前缀压成 (d,d) 常数状态，KV 从 O(L) 降到 O(d)）② KV 三件套压缩（sink token + 滑窗 + 低位量化，内存只随窗口变不随 L 变，实测 L=65536 时压缩比 1145x、省 99.9%）③ LatentMoE 稀疏路由（低秩潜在空间门控 + top-k 专家激活，算力只与激活专家成正比 + 负载均衡损失）④ Engram 外部记忆（写入/余弦检索/回填，长上下文按需取用）；实现思路：把「局部精确 + 全局摘要」这条主线贯穿三处——注意力上局部 full/全局 linear，缓存上局部滑窗/全局丢弃，记忆上近期窗口/外部 Engram；复用要点：① 混合注意力伪代码可直接照抄（README 干货块 A）② KV 调参表（sink/sliding/quant_bits，干货块 B）③ LatentMoE 路由要点 + Engram 工作流（干货块 C/D）④ 三个坑：线性注意力用 elu(x)+1 别用 relu、KV 压缩必留 sink 锚点、MoE 不加载均衡损失会塌缩；填一份 JSON 即可 `hybridctx doctor` 跑通整条链路，换真实 Hy4 权重只需替换 model 层 | 零依赖 / 169 文件 / 98 Py / 43 文档 / 3 注意力后端 / 4 组件 / CLI 6 命令 / Py+TS SDK / Web / Docker/K8s/Helm/CI | ✅ 已发布 |
 | 2026-11-19 | 英伟达开源 Nemotron-Labs-Sigma 文本扩散模型（3B/8B），用**分块扩散**替代逐 token 自回归：32 步去噪 + 64 token 分块、块内并行生成，H100 单卡 BF16 跑到 120~140 token/s，把「生成」变成「去噪」 | [**sigmainfer（Sigma 文本扩散推理引擎）**](https://github.com/huzjie/sigmainfer) | 纯 Python 零依赖内核，把「分块扩散」落成可运行、可拆解、可复用的工程——① 分块调度（max_new_tokens 切块，块内并行、块间串行）② 掩码调度（cosine/linear/constant 三种 schedule 控制每步 unmask 比例，全掩码块一步 argmax 是并行贪心不是扩散）③ 置信度门槛 + 自适应退火（每步只 unmask 置信度 ≥ threshold 的位置，连续停滞自动降门槛，步数耗尽 argmax 强制收尾——早停省算力、兜底保下限）④ 三种采样器（confidence/topk/argmax，共享 sample(logits)->候选+置信度 接口）⑤ KV cache 跨块复用前缀 ⑥ 同一引擎下自回归 vs 扩散吞吐对比基准；实现思路：自回归是串行（N token N 次前向），扩散是并行（一次前向对块内所有 [MASK] 位置同时打分再批量 unmask），吞吐随 block_size 提升；复用要点：① 分块扩散伪代码工作流可直接照抄到任意框架（见 README 干货块 A）② 置信度门槛退火 4 参数调参表（initial/min_value/decay/stall_steps，见干货块 B）③ 三个坑：块太大伤质量、一步 argmax 不是扩散、早停必须配兜底收尾；填一份 JSON 配置即可 `sigmainfer doctor` 跑通整条链路，换真实 Sigma 权重只需替换 model 层 | 零依赖 / 155 文件 / 96 Py / 31 文档 / 3 schedule / 3 sampler / CLI 7 命令 / Docker/K8s/Helm/CI | ✅ 已发布 |
